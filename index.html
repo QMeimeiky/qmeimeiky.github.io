@@ -33,20 +33,10 @@
 </head>
 <body>
   <main>
-    <header><a class="brand" href="./">thomasaas</a><div class="controls"><a href="https://github.com/thomasaas">GitHub ↗</a><button type="button" id="theme-toggle" aria-label="Switch color theme">Theme</button></div></header>
-    <h1>Posts</h1>
+    <h1>Latest writing</h1>
     <ul class="posts">
       <li><h2><a href="hello-world.html">Hello, world.</a></h2><div class="meta">Sample post</div><p>A first entry for this space—and an example of how a post can look.</p></li>
     </ul>
   </main>
-  <script>
-    (function () {
-      var button = document.getElementById('theme-toggle');
-      function current() { return document.documentElement.dataset.theme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); }
-      function update() { button.textContent = current() === 'dark' ? '☀ Light' : '☾ Dark'; button.setAttribute('aria-label', 'Switch to ' + (current() === 'dark' ? 'light' : 'dark') + ' theme'); }
-      button.addEventListener('click', function () { var next = current() === 'dark' ? 'light' : 'dark'; document.documentElement.dataset.theme = next; try { localStorage.setItem('blog-theme', next); } catch (_) {} update(); });
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', update); update();
-    })();
-  </script>
 </body>
 </html>

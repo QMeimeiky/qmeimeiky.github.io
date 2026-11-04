@@ -3,82 +3,49 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A personal blog by thomasaas.">
-  <title>thomasaas — Notes &amp; ideas</title>
-  <script>
-    try { const theme = localStorage.getItem('blog-theme'); if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme; } catch (_) {}
-  </script>
+  <meta name="description" content="Writing by thomasaas.">
+  <title>thomasaas — Posts</title>
+  <script>try { var t = localStorage.getItem('blog-theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (_) {}</script>
   <style>
-    :root { color-scheme: light dark; --bg:#f6faf7; --fg:#1d1d1f; --muted:#5f6368; --faint:#dde8e0; --card:#fff; --code:#eaf2ec; --accent:#2b7a52; }
-    @media (prefers-color-scheme:dark) { :root:not([data-theme="light"]) { --bg:#131816; --fg:#ecebe8; --muted:#a3a7ad; --faint:#29332e; --card:#1a211e; --code:#222b26; --accent:#7fd3a5; } }
-    :root[data-theme="dark"] { --bg:#131816; --fg:#ecebe8; --muted:#a3a7ad; --faint:#29332e; --card:#1a211e; --code:#222b26; --accent:#7fd3a5; }
+    :root { color-scheme:light dark; --bg:#f6faf7; --fg:#1d1d1f; --muted:#5f6368; --faint:#dde8e0; --card:#fff; --accent:#2b7a52; }
+    @media (prefers-color-scheme:dark) { :root:not([data-theme="light"]) { --bg:#131816; --fg:#ecebe8; --muted:#a3a7ad; --faint:#29332e; --card:#1a211e; --accent:#7fd3a5; } }
+    :root[data-theme="dark"] { --bg:#131816; --fg:#ecebe8; --muted:#a3a7ad; --faint:#29332e; --card:#1a211e; --accent:#7fd3a5; }
     * { box-sizing:border-box; }
-    html { -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
     body { margin:0; background:var(--bg); color:var(--fg); font:17px/1.62 Georgia,"Iowan Old Style","Palatino Linotype",serif; }
-    .wrap { max-width:740px; margin:0 auto; padding:0 16px; }
-    header, h1, h2, h3, .meta, .post-label, footer, button { font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
-    header { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:28px 0 18px; border-bottom:1px solid var(--faint); font-size:.85rem; }
-    .brand { font-weight:700; color:var(--fg); text-decoration:none; }
-    nav { display:flex; align-items:center; flex-wrap:wrap; gap:18px; }
-    nav a { text-decoration:none; }
+    main { max-width:740px; margin:auto; padding:40px 16px 80px; }
+    header, h1, h2, .meta, button { font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+    header { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:3rem; }
+    .brand { color:var(--fg); font-weight:700; text-decoration:none; font-size:.9rem; }
+    .controls { display:flex; align-items:center; gap:16px; font-size:.85rem; }
     a { color:var(--accent); }
-    a:hover { text-decoration:underline; }
     a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
     button { color:var(--fg); background:var(--card); border:1px solid var(--faint); border-radius:6px; padding:5px 9px; font-size:.8rem; cursor:pointer; }
-    button:hover { border-color:var(--accent); }
-    main { padding:46px 0 66px; }
-    h1 { font-size:2.1rem; line-height:1.15; letter-spacing:-.01em; margin:0 0 .3rem; }
-    h2 { font-size:1.3rem; line-height:1.3; margin:2.4rem 0 .6rem; }
-    h3 { font-size:1.05rem; line-height:1.35; margin:0 0 .3rem; }
-    p { margin:.9rem 0; }
-    .meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; }
-    .intro { background:var(--card); border:1px solid var(--faint); border-left:3px solid var(--accent); border-radius:10px; padding:12px 16px; margin:0 0 2rem; font-size:.95rem; }
-    .intro p { margin:0; }
-    .section-heading { display:flex; justify-content:space-between; align-items:baseline; gap:12px; border-bottom:1px solid var(--faint); margin:2.4rem 0 .4rem; }
-    .section-heading h2 { margin:0 0 .6rem; }
-    .post-label { color:var(--muted); font-size:.78rem; }
-    .post { padding:1.15rem 0 1.35rem; border-bottom:1px solid var(--faint); }
-    .post h3 a { text-decoration:none; }
-    .post h3 a:hover { text-decoration:underline; }
-    .post p { margin:.35rem 0; }
-    .tag { display:inline-block; font:.75rem system-ui,sans-serif; border:1px solid var(--faint); background:var(--card); border-radius:999px; padding:3px 9px; color:var(--muted); }
-    article { margin-top:3.6rem; }
-    article h2 { font-size:1.65rem; margin:0 0 .3rem; }
-    article .meta { margin-bottom:1.25rem; }
-    .back { font:.85rem system-ui,sans-serif; }
-    .about { margin-top:3.2rem; padding-top:.1rem; border-top:1px solid var(--faint); }
-    footer { border-top:1px solid var(--faint); padding:20px 0 32px; display:flex; justify-content:space-between; gap:12px; color:var(--muted); font-size:.78rem; }
-    @media(max-width:560px) { body { font-size:16px; } header { align-items:flex-start; } nav { gap:12px; } main { padding-top:34px; } h1 { font-size:1.65rem; } article h2 { font-size:1.4rem; } }
-    @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+    h1 { font-size:2.1rem; line-height:1.15; letter-spacing:-.01em; margin:0 0 1.5rem; }
+    .posts { list-style:none; padding:0; margin:0; border-top:1px solid var(--faint); }
+    .posts li { padding:1.2rem 0; border-bottom:1px solid var(--faint); }
+    .posts h2 { font-size:1.05rem; line-height:1.35; margin:0 0 .2rem; }
+    .posts h2 a { text-decoration:none; }
+    .posts h2 a:hover { text-decoration:underline; }
+    .meta { color:var(--muted); font-size:.85rem; }
+    .posts p { margin:.4rem 0 0; }
+    @media(max-width:560px) { body { font-size:16px; } main { padding-top:28px; } header { margin-bottom:2.5rem; } h1 { font-size:1.65rem; } }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <a class="brand" href="#top">thomasaas</a>
-      <nav aria-label="Main navigation"><a href="#writing">Writing</a><a href="#about">About</a><a href="https://github.com/thomasaas">GitHub ↗</a><button type="button" id="theme-toggle" aria-label="Switch color theme">Theme</button></nav>
-    </header>
-    <main id="top">
-      <h1>Notes &amp; ideas</h1>
-      <div class="meta">A personal blog by thomasaas</div>
-      <div class="intro"><p>Notes, thoughts, and things worth sharing. Welcome to my little corner of the internet.</p></div>
-      <section id="writing" aria-labelledby="writing-title">
-        <div class="section-heading"><h2 id="writing-title">Latest writing</h2><span class="post-label">01 / Notes</span></div>
-        <div class="post"><div class="post-label">START HERE · SAMPLE POST</div><h3><a href="#first-post">Hello, world.</a></h3><p>A first entry for this space—and an example of how a post can look.</p><span class="tag">Example content</span></div>
-      </section>
-      <article id="first-post"><h2>Hello, world.</h2><div class="meta">Sample post · Start here</div><p>Welcome to my blog. This is a space for sharing ideas, documenting things I’m learning, and making room for the occasional unfinished thought.</p><p>This is a sample post. Replace it with your own words whenever you’re ready.</p><a class="back" href="#writing">↑ Back to writing</a></article>
-      <section class="about" id="about"><h2>About</h2><p>Hi, I’m thomasaas. This is my space to write and share what’s on my mind.</p><p>Want to see what I’m working on? You can find me on <a href="https://github.com/thomasaas">GitHub</a>.</p></section>
-    </main>
-    <footer><span>© thomasaas</span><span>Made for the open web.</span></footer>
-  </div>
+  <main>
+    <header><a class="brand" href="./">thomasaas</a><div class="controls"><a href="https://github.com/thomasaas">GitHub ↗</a><button type="button" id="theme-toggle" aria-label="Switch color theme">Theme</button></div></header>
+    <h1>Posts</h1>
+    <ul class="posts">
+      <li><h2><a href="hello-world.html">Hello, world.</a></h2><div class="meta">Sample post</div><p>A first entry for this space—and an example of how a post can look.</p></li>
+    </ul>
+  </main>
   <script>
     (function () {
       var button = document.getElementById('theme-toggle');
       function current() { return document.documentElement.dataset.theme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); }
       function update() { button.textContent = current() === 'dark' ? '☀ Light' : '☾ Dark'; button.setAttribute('aria-label', 'Switch to ' + (current() === 'dark' ? 'light' : 'dark') + ' theme'); }
       button.addEventListener('click', function () { var next = current() === 'dark' ? 'light' : 'dark'; document.documentElement.dataset.theme = next; try { localStorage.setItem('blog-theme', next); } catch (_) {} update(); });
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', update);
-      update();
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', update); update();
     })();
   </script>
 </body>

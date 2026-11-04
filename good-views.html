@@ -1,0 +1,1637 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Good Views Hidden in Plain Sight</title>
+  <meta name="description"
+    content="Read at the token its objective supervises, the paired next-token baseline of 'Proving and Improving the Platonic Representation Hypothesis with JEPAs' matches good-view JEPA on retrieval.">
+  <meta name="author" content="Thomas Bernwald">
+  <link rel="canonical" href="https://thomasaas.github.io/good-views.html">
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2026-11-04">
+  <meta property="og:url" content="https://thomasaas.github.io/good-views.html">
+  <meta property="og:title" content="Good Views Hidden in Plain Sight">
+  <meta property="og:description" content="Revisiting the next-token baselines in “Proving and Improving the PRH with JEPAs”: read at [SEP], the paper’s own paired NTP baseline matches the good-view JEPA on Flickr retrieval.">
+  <meta property="og:image" content="https://thomasaas.github.io/good-views.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Bar chart: Flickr R@1 by model and readout; paired NTP rises from 13.2% (mean) to 24.5% (h([SEP])), level with the good-view JEPA.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Good Views Hidden in Plain Sight">
+  <meta name="twitter:description" content="Revisiting the next-token baselines in “Proving and Improving the PRH with JEPAs”: read at [SEP], the paper’s own paired NTP baseline matches the good-view JEPA on Flickr retrieval.">
+  <meta name="twitter:image" content="https://thomasaas.github.io/good-views.png">
+  <style>
+    :root {
+      --bg: #f6faf7;
+      --fg: #1d1d1f;
+      --muted: #5f6368;
+      --faint: #dde8e0;
+      --card: #ffffff;
+      --code: #eaf2ec;
+      --accent: #2b7a52;
+      --ordinary: #7d848f;
+      --paired: #d9822b;
+      --conditional: #1f8a7a;
+      --jepa: #6a52d9;
+      --qwen: #3c78c3;
+      --tipbg: #1d1d1f;
+      --tipfg: #f2f7f3;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #131816;
+        --fg: #ecebe8;
+        --muted: #a3a7ad;
+        --faint: #29332e;
+        --card: #1a211e;
+        --code: #222b26;
+        --accent: #7fd3a5;
+        --ordinary: #9aa1ab;
+        --paired: #f0a050;
+        --conditional: #43c2ad;
+        --jepa: #9d8cff;
+        --qwen: #6fa8ec;
+        --tipbg: #edf5f0;
+        --tipfg: #1b1b1d;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #131816;
+      --fg: #ecebe8;
+      --muted: #a3a7ad;
+      --faint: #29332e;
+      --card: #1a211e;
+      --code: #222b26;
+      --accent: #7fd3a5;
+      --ordinary: #9aa1ab;
+      --paired: #f0a050;
+      --conditional: #43c2ad;
+      --jepa: #9d8cff;
+      --qwen: #6fa8ec;
+      --tipbg: #edf5f0;
+      --tipfg: #1b1b1d;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font: 17px/1.62 Georgia, "Iowan Old Style", "Palatino Linotype", serif
+    }
+
+    main {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 40px 16px 80px
+    }
+
+    h1,
+    h2,
+    h3,
+    .ui,
+    figcaption,
+    table,
+    .chart,
+    .tip,
+    .meta,
+    .legend,
+    details summary {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      line-height: 1.4;
+      color: var(--muted);
+      margin: 0 0 .6rem
+    }
+
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.15;
+      margin: 0 0 .3rem;
+      letter-spacing: -.01em
+    }
+
+    h2 {
+      font-size: 1.3rem;
+      margin: 2.4rem 0 .6rem
+    }
+
+    h3 {
+      font-size: 1.05rem;
+      margin: 1.8rem 0 .4rem
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: .9rem;
+      margin-bottom: 2rem
+    }
+
+    p {
+      margin: .9rem 0
+    }
+
+    a {
+      color: var(--accent)
+    }
+
+    blockquote {
+      margin: 1.2rem 0;
+      padding: .2rem 1rem;
+      border-left: 3px solid var(--faint);
+      color: var(--muted);
+      font-style: italic
+    }
+
+    code {
+      font: .86em ui-monospace, SFMono-Regular, Consolas, monospace;
+      background: var(--code);
+      padding: .1em .35em;
+      border-radius: 4px
+    }
+
+    pre {
+      background: var(--code);
+      padding: .8rem 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: .85rem
+    }
+
+    pre code {
+      background: none;
+      padding: 0
+    }
+
+    .key {
+      font-family: system-ui, sans-serif;
+      font-weight: 600
+    }
+
+    .hl {
+      background: linear-gradient(transparent 60%, color-mix(in srgb, var(--accent) 22%, transparent) 60%)
+    }
+
+    figure {
+      margin: 1.8rem 0;
+      padding: 16px;
+      background: var(--card);
+      border: 1px solid var(--faint);
+      border-radius: 12px
+    }
+
+    figure h4 {
+      margin: 0 0 .2rem;
+      font: 600 1rem system-ui, sans-serif
+    }
+
+    figcaption {
+      font-size: .84rem;
+      color: var(--muted);
+      margin-top: .8rem;
+      line-height: 1.45
+    }
+
+    .ui {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin: .6rem 0 .9rem;
+      font-size: .85rem
+    }
+
+    .ui label {
+      color: var(--muted)
+    }
+
+    select {
+      font: inherit;
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--faint);
+      background: var(--bg);
+      color: var(--fg)
+    }
+
+    .chip {
+      font: inherit;
+      font-size: .8rem;
+      border: 1px solid var(--faint);
+      background: var(--bg);
+      color: var(--fg);
+      border-radius: 999px;
+      padding: 3px 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .chip[aria-pressed="false"] {
+      opacity: .45
+    }
+
+    .sw {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block
+    }
+
+    .sw.dash {
+      border-radius: 2px;
+      height: 3px;
+      width: 14px
+    }
+
+    /* bar chart */
+    .chart {
+      font-size: .82rem
+    }
+
+    .grp {
+      margin: 10px 0 14px
+    }
+
+    .grp-name {
+      font-weight: 600;
+      font-size: .86rem;
+      margin-bottom: 4px;
+      display: flex;
+      gap: 8px;
+      align-items: baseline;
+      flex-wrap: wrap
+    }
+
+    .grp-name span {
+      font-weight: 400;
+      color: var(--muted);
+      font-size: .78rem
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 118px 1fr;
+      gap: 8px;
+      align-items: center;
+      margin: 3px 0
+    }
+
+    .rlab {
+      color: var(--muted);
+      text-align: right;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
+    }
+
+    .track {
+      position: relative;
+      height: 22px;
+      border-radius: 4px;
+      background: color-mix(in srgb, var(--faint) 55%, transparent)
+    }
+
+    .bar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      border: 0;
+      border-radius: 4px;
+      cursor: help;
+      padding: 0;
+      transition: width .35s ease
+    }
+
+    .bar:focus-visible {
+      outline: 2px solid var(--fg);
+      outline-offset: 2px
+    }
+
+    .bar.soft {
+      opacity: .42
+    }
+
+    .val {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-variant-numeric: tabular-nums;
+      font-weight: 600;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 1;
+      padding: 0 3px;
+      border-radius: 3px;
+      background: var(--card)
+    }
+
+    .val.in {
+      background: none
+    }
+
+    .ref {
+      position: absolute;
+      top: -3px;
+      bottom: -3px;
+      width: 0;
+      border-left: 2px dashed var(--fg);
+      opacity: .7;
+      cursor: help
+    }
+
+    .ref::after {
+      content: "";
+      position: absolute;
+      left: -7px;
+      right: -7px;
+      top: 0;
+      bottom: 0
+    }
+
+    .axis {
+      display: grid;
+      grid-template-columns: 118px 1fr;
+      gap: 8px;
+      color: var(--muted);
+      font-size: .74rem;
+      margin-top: 2px
+    }
+
+    .ticks {
+      position: relative;
+      height: 16px
+    }
+
+    .ticks span {
+      position: absolute;
+      transform: translateX(-50%)
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: .78rem;
+      color: var(--muted);
+      margin-top: 8px
+    }
+
+    .legend i {
+      display: inline-block;
+      width: 18px;
+      height: 10px;
+      border-radius: 3px;
+      margin-right: 5px;
+      vertical-align: -1px
+    }
+
+    /* line chart */
+    svg text {
+      fill: var(--muted);
+      font: 11px system-ui, sans-serif
+    }
+
+    svg .grid {
+      stroke: var(--faint)
+    }
+
+    svg .pt {
+      cursor: help
+    }
+
+    svg .pt:focus {
+      outline: none
+    }
+
+    svg .pt:focus-visible {
+      stroke: var(--fg);
+      stroke-width: 2
+    }
+
+    /* tables */
+    .tw {
+      overflow-x: auto;
+      margin: 1rem 0
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: .85rem;
+      font-variant-numeric: tabular-nums
+    }
+
+    th,
+    td {
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--faint);
+      text-align: right;
+      white-space: nowrap
+    }
+
+    th:first-child,
+    td:first-child {
+      text-align: left
+    }
+
+    th {
+      font-weight: 600;
+      color: var(--muted);
+      font-size: .78rem
+    }
+
+    td[data-tip],
+    th[data-tip] {
+      cursor: help
+    }
+
+    td[data-tip]:hover,
+    th[data-tip]:hover,
+    td[data-tip]:focus,
+    th[data-tip]:focus {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      outline: none
+    }
+
+    tr.sub td {
+      color: var(--muted);
+      font-size: .8rem
+    }
+
+    td.best {
+      font-weight: 700
+    }
+
+    .dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 6px
+    }
+
+    /* tooltip */
+    .tip {
+      position: fixed;
+      z-index: 50;
+      max-width: min(340px, calc(100vw - 24px));
+      background: var(--tipbg);
+      color: var(--tipfg);
+      padding: 9px 11px;
+      border-radius: 8px;
+      font-size: .8rem;
+      line-height: 1.42;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, .25);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .12s
+    }
+
+    .tip.on {
+      opacity: 1
+    }
+
+    .tip b {
+      font-weight: 650
+    }
+
+    .tip .tv {
+      font-size: 1.05rem;
+      font-weight: 700;
+      display: block;
+      margin: 2px 0 4px
+    }
+
+    .tip .src {
+      opacity: .72;
+      font-size: .74rem;
+      display: block;
+      margin-top: 5px
+    }
+
+    .tip code {
+      background: color-mix(in srgb, var(--tipfg) 16%, transparent);
+      color: inherit
+    }
+
+    details {
+      margin: 1rem 0;
+      border: 1px solid var(--faint);
+      border-radius: 10px;
+      padding: 0 14px;
+      background: var(--card)
+    }
+
+    details summary {
+      cursor: pointer;
+      padding: 12px 0;
+      font-weight: 600
+    }
+
+    details[open] summary {
+      border-bottom: 1px solid var(--faint);
+      margin-bottom: 6px
+    }
+
+    .note {
+      font-size: .88rem;
+      color: var(--muted)
+    }
+
+    ol.refs {
+      font-size: .88rem;
+      padding-left: 1.3rem
+    }
+
+    ol.refs li {
+      margin: .35rem 0
+    }
+
+    .lossnote {
+      font: .85rem/1.45 system-ui, sans-serif;
+      color: var(--fg);
+      background: color-mix(in srgb, var(--paired) 10%, var(--card));
+      border-left: 3px solid var(--paired);
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin: 6px 0 4px
+    }
+
+    .lossnote[hidden] { display: none }
+
+    .hint {
+      font-size: .78rem;
+      color: var(--muted);
+      font-family: system-ui, sans-serif
+    }
+
+    .credit {
+      font-family: system-ui, sans-serif;
+      font-size: .78rem;
+      color: var(--muted);
+      margin: 2px 0 4px;
+      max-width: 420px
+    }
+
+    details.aiuse { border: 0; padding: 0; background: none; margin: -1.2rem 0 1.6rem }
+    details.aiuse > summary { font: 500 .78rem system-ui, sans-serif; color: var(--muted); display: inline-flex;
+      align-items: center; gap: .45em; padding: 3px 11px 3px 9px; border: 1px solid var(--faint); border-radius: 999px;
+      background: var(--card); margin: 0 0 4px; list-style: none; cursor: pointer; user-select: none }
+    details.aiuse > summary::-webkit-details-marker { display: none }
+    details.aiuse > summary::before { content: "\25B8"; font-size: .9em; transition: transform .15s }
+    details.aiuse[open] > summary::before { transform: rotate(90deg) }
+    details.aiuse > summary:hover { color: var(--fg); border-color: var(--muted) }
+    details.aiuse > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+
+    .crow {
+      display: grid;
+      grid-template-columns: 70px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      margin: 4px 0
+    }
+
+    .ctrack {
+      display: flex;
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+      background: var(--faint)
+    }
+
+    .cme {
+      background: var(--accent)
+    }
+
+    .cai {
+      background: color-mix(in srgb, var(--muted) 45%, transparent)
+    }
+
+    .cval {
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap
+    }
+
+    .tldr {
+      background: var(--card);
+      border: 1px solid var(--faint);
+      border-left: 3px solid var(--accent);
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin: 0 0 2rem;
+      font-size: .95rem
+    }
+
+    @media (max-width:560px) {
+      body {
+        font-size: 16px
+      }
+
+      h1 {
+        font-size: 1.65rem
+      }
+
+      .row,
+      .axis {
+        grid-template-columns: 84px 1fr
+      }
+
+      figure {
+        padding: 12px
+      }
+    }
+      a.cite { text-decoration: none; font-family: system-ui, sans-serif; font-size: .85em }
+    a.cite:hover { text-decoration: underline }
+      select { max-width: 100%; min-width: 0; text-overflow: ellipsis }
+      details h4 { font: 600 .95rem system-ui, sans-serif; margin: 1.4rem 0 .3rem }
+
+    details.bib { border: 0; padding: 0; background: none; margin: 2.5rem 0 1rem }
+    details.bib > summary { font-size: 1.05rem; border: 0; margin: 0; list-style: none }
+    details.bib > summary::-webkit-details-marker { display: none }
+    details.bib > summary::after { content: "\203A"; display: inline-block; margin-left: .45em; color: var(--muted);
+      transform: rotate(90deg); transition: transform .15s }
+    details.bib[open] > summary::after { transform: rotate(-90deg) }
+    .bibcard { border: 1px solid var(--faint); border-radius: 10px; background: var(--card); overflow: hidden }
+    .bibbar { display: flex; align-items: center; gap: 6px; padding: 8px 10px 8px 14px; background: var(--code);
+      border-bottom: 1px solid var(--faint); font: 600 .72rem system-ui, sans-serif; letter-spacing: .08em;
+      color: var(--muted) }
+    .bibbar i { width: 8px; height: 8px; border-radius: 50%; background: var(--faint); display: inline-block }
+    .bibbar span { margin-left: 6px }
+    .bibbar button { margin-left: auto; font: inherit; color: var(--muted); background: var(--card);
+      border: 1px solid var(--faint); border-radius: 6px; padding: 4px 9px; cursor: pointer }
+    .bibbar button:hover { color: var(--fg) }
+    details.bib pre { margin: 0; background: none; border-radius: 0; padding: 14px 16px; line-height: 1.7 }
+    .bib .bk { color: var(--jepa) }
+    .bib .bid { color: var(--qwen) }
+    .bib .bs { color: var(--accent) }
+    .bib .bp { color: var(--muted) }
+  </style>
+</head>
+
+<body>
+  <main>
+    <article>
+      <h1>Good Views Hidden in Plain Sight</h1>
+      <p class="subtitle">Revisiting the Next-Token Baselines in “Proving and Improving the Platonic Representation
+        Hypothesis with JEPAs”</p>
+      <div class="meta"><time datetime="2026-11-04">4 November 2026</time> · preliminary, single-seed experiments</div>
+
+      <details class="aiuse">
+        <summary title="Show how much of this work was done by AI">AI Usage</summary>
+      <div class="credit" aria-label="Contributions: ideas 90% mine and 10% AI; execution 10% mine and 90% AI">
+        <div class="crow"><span class="clab">Ideas</span><span class="ctrack"><span class="cme"
+              style="width:90%"></span><span class="cai" style="width:10%"></span></span><span class="cval">90% me · 10%
+            AI</span></div>
+        <div class="crow"><span class="clab">Execution</span><span class="ctrack"><span class="cme"
+              style="width:10%"></span><span class="cai" style="width:90%"></span></span><span class="cval">10% me · 90%
+            AI</span></div>
+      </div>
+      </details>
+
+      <div class="tldr">
+        <b>TL;DR.</b> Balestriero and LeCun’s <a href="https://arxiv.org/abs/2610.39302"><em>Proving and Improving the
+        Platonic Representation Hypothesis with JEPAs</em></a> trains text models on pairs of captions from the same
+        image and finds that a JEPA aligns well with a vision encoder, whereas next-token prediction (NTP) given the
+        same caption pairs barely improves over single-caption training. They conclude that the gain comes from the JEPA
+        objective rather than the paired data. However, that
+        baseline is evaluated by mean-pooling over the caption. Evaluating the same checkpoint at <code>[SEP]</code>,
+        the position trained to predict the other caption, matches the good-view JEPA on Flickr R@1 through one
+        rotation (24.5% vs 24.6%). Training it to predict only the other caption reaches 27.8%, while the JEPA still
+        leads on mutual 10-NN. Frozen Qwen2.5-0.5B and 1.5B baselines also jump from 24% to 35–43% R@1 when read out
+        after a short prompt. At the paper’s smallest web-scale point (2.24M images), reading <code>[SEP]</code> closes
+        most of the WIT gap (.075 → .093 vs .107) but leaves a clear Flickr retrieval gap (25.3% vs 33.9%). Comparisons
+        between NTP and JEPA representations are thus sensitive to how the representation is extracted.
+      </div>
+
+      <p>In <a href="https://arxiv.org/abs/2610.39302"><em>Proving and Improving the Platonic Representation Hypothesis
+            with JEPAs</em></a> <a class="cite" href="#ref-1" data-cite="1">[1]</a>, Randall Balestriero and Yann LeCun
+        prove under idealised assumptions that JEPA encoders learn the same representation up to one rotation when
+        trained on <em>good views</em> (distinct observations of the same scene, such as two captions of one image).
+        <em>Bad views</em> corrupt a single observation, such as masking one caption twice; because those views share
+        surface wording, the encoder retains wording alongside scene content. Empirically, a small BERT trained as a
+        good-view JEPA on Flickr captions aligns with frozen DINOv2 much better than a bad-view JEPA or next-token
+        prediction (NTP). The authors argue that NTP acts like a bad-view JEPA whose positives are a prefix and its
+        continuation, and therefore aligns with vision mainly through scale.</p>
+
+      <p>I ran a few quick experiments with LLM coding agents to test that comparison. The paper’s paired-caption NTP
+        baseline appears to underestimate what NTP learns from good views because its mean-pooled readout dilutes the
+        cross-caption signal.</p>
+
+      <h2>The paired baseline</h2>
+
+      <p>The paper’s main NTP baseline trains on single captions, which matches the data given to the bad-view JEPA
+        (both score ~.12–.13 against DINOv2 on Flickr) but not the good-view JEPA, which sees which captions share an
+        image. Section 3.1 addresses this with a paired NTP control:</p>
+
+      <blockquote>“Third, the gain comes from the objective and not from the information that two captions describe the
+        same image: next-token prediction trained on two captions of the same image, [CLS] a [SEP] b [SEP], barely moves
+        (mutual 10-NN .042 to .043, R@1 .021 to .023), i.e., the same positives help next-token prediction far less than
+        they help as JEPA views, as per Proposition 4”</blockquote>
+
+      <p class="note">(Table 1 measures alignment against an image JEPA trained from scratch on Flickr. Against frozen
+        DINOv2 in Table 2, R@1 moves from .118 to .137. All results below use frozen DINOv2.)</p>
+
+      <p>At evaluation time, the paper feeds a single caption <code>[CLS] a [SEP]</code> and mean-pools the final hidden
+        states across all tokens. In earlier layers, tokens in <em>b</em> can attend back to all of <em>a</em> as well
+        as <code>[SEP]</code>, so cross-caption gradients reach the whole prefix. At the final layer, however, each
+        state feeds only the output head at its own position: tokens inside <em>a</em> only see a prefix of <em>a</em>
+        and predict the next token of <em>a</em> (or <code>[SEP]</code>), whereas <code>[SEP]</code> has seen all of
+        <em>a</em> and is the only position trained to predict into the second caption <em>b</em> (specifically its
+        first token). That makes <span class="key">h([SEP])</span> an interesting readout candidate.</p>
+
+      <p>Appendix B of the paper tests a last-token readout only on single-caption NTP, where it trails mean pooling
+        (R@1 .061 vs .119). That is expected: there <code>[SEP]</code> is followed by ignored padding and receives no loss. In the paired
+        model, <code>[SEP]</code> predicts the first token of <em>b</em>, yet wasn’t evaluated separately.</p>
+
+      <figure id="fig1">
+        <h4>Figure 1 · Same checkpoints, different readout</h4>
+        <div class="hint">Hover or tap bars, points and table cells for details.</div>
+        <div class="ui"><label for="m1">Metric</label>
+          <select id="m1">
+            <option value="r1k">R@1, rotation fitted on 1k pairs</option>
+            <option value="r30k">R@1, rotation fitted on 30k pairs</option>
+            <option value="mknn">Mutual 10-NN (no fitted map)</option>
+          </select>
+        </div>
+        <div class="chart" id="chart1" role="group" aria-label="Bar chart of alignment by model and readout"></div>
+        <div class="legend">
+          <span><i style="background:linear-gradient(90deg,var(--ordinary) 0 25%,var(--paired) 25% 50%,var(--conditional) 50% 75%,var(--jepa) 75%);opacity:.42;width:28px"></i>readout the paper uses (lighter)</span>
+          <span><i style="background:linear-gradient(90deg,var(--ordinary) 0 25%,var(--paired) 25% 50%,var(--conditional) 50% 75%,var(--jepa) 75%);width:28px"></i>alternative readout</span>
+          <span><i style="border-left:2px dashed var(--fg);opacity:.7;height:16px;width:2px;border-radius:0;vertical-align:middle"></i>paper’s reported
+            value (3 seeds)</span>
+        </div>
+        <figcaption>Flickr30k, BERT-S (33M) text encoders trained from scratch for 200 epochs (one seed each), 1,000
+          test images against frozen DINOv2 ViT-B/14. R@1 is image→caption retrieval through one orthogonal map; chance
+          is 0.1%. The paired-NTP checkpoint was trained with the authors’ code, unchanged.</figcaption>
+      </figure>
+
+      <p>Using the authors’ training code unchanged (BERT-S, Flickr30k, 200 epochs, seed 0) and changing only the
+        readout:</p>
+      <ul>
+        <li><b>R@1, 1k-pair rotation:</b> <span class="hl">13.2% → 24.5%</span> (good-view JEPA: 24.6%).</li>
+        <li><b>R@1, 30k-pair rotation:</b> 23.9% → 32.1% (good-view JEPA: 34.6%).</li>
+        <li><b>Mutual 10-NN:</b> .127 → .170 (good-view JEPA: .232).</li>
+      </ul>
+
+      <p>On retrieval through an orthogonal map (the paper’s “direct test of equality up to rotation”), paired NTP read
+        at h([SEP]) matches the good-view JEPA on the 1k-pair fit, while the JEPA retains a clear lead on mutual 10-NN.
+        An independent GPT-written run stopped at epoch 139 shows the same jump (14.0% → 22.2% on 1k, 26.1% → 31.5% on
+        30k).</p>
+
+      <p>Reading h([SEP]) hurts both single-caption NTP (11.1% → 6.6%) and the JEPA (11.1% vs 24.9% for h([CLS])). It
+        only helps when <code>[SEP]</code> precedes a second caption of the <em>same</em> image during training: in a
+        25-epoch pilot where caption <em>a</em> was paired with a caption from a different image, h([SEP]) dropped to
+        chance (Appendix A1).</p>
+
+      <p>Alignment at h([SEP]) also keeps rising while the validation loss more than doubles (Figure 2). The paper’s
+        validation metric (used for its early-stopped row, though main tables use final checkpoints) is next-token loss
+        on <em>single</em> captions, which rises after ~20–30 epochs as the model memorises training phrasing. Because
+        single captions have only ignored padding after <code>[SEP]</code>, that validation loss never evaluates
+        <code>[SEP]</code> or cross-caption prediction; early-stopping on it would pick epoch 20 (17.5% R@1 instead of
+        24.5%).</p>
+
+      <h2>Predicting only the other caption</h2>
+
+      <p>Paired NTP still spends roughly half its loss predicting caption <em>a</em>, whereas the JEPA only penalises
+        disagreement between views. To isolate cross-caption prediction, I trained a <b>conditional</b> NTP variant
+        using the same <code>[CLS] a [SEP] b [SEP]</code> input, initialization, and schedule, but masking the loss on
+        <em>a</em> so only <em>b</em> is predicted (with gradients still flowing into <em>a</em> and both caption orders
+        sampled).</p>
+
+      <p>Read at h([SEP]), conditional NTP reaches <span class="hl">27.8% / 38.3% R@1</span> (1k / 30k fit), ahead of
+        the good-view JEPA’s 24.6% / 34.6%, and even mean pooling reaches 22.2% / 33.5%. Its mutual 10-NN (.185) remains
+        below the JEPA’s (.232). Part of the gain over standard paired NTP may simply come from <em>b</em>’s tokens
+        receiving roughly twice the weight in the loss.</p>
+
+      <p>Readout choice affects the JEPA as well: its native h([CLS]) readout (the projector input) beats mean pooling on
+        Flickr R@1 (24.9% vs 16.7%), while the projector output itself scores 26.7% on the 1k fit (2.2 points above paired NTP’s h([SEP])) and 32.4% on
+        the 30k fit (Appendix A1). On Flickr, the paper thus compares the JEPA at its trained summary token against paired NTP
+        mean-pooled over tokens trained for within-caption prediction. (On WIT-1024 and COCO-5k, the paper instead
+        mean-pools all models across layers following the PRH protocol <a class="cite" href="#ref-2"
+          data-cite="2">[2]</a>.)</p>
+
+      <figure id="fig2">
+        <h4>Figure 2 · Alignment during training</h4>
+        <div class="ui"><label for="m2">Metric</label>
+          <select id="m2">
+            <option value="r1k">R@1, rotation fitted on 1k pairs</option>
+            <option value="mknn">Mutual 10-NN</option>
+            <option value="loss">Validation loss (paired NTP)</option>
+          </select>
+        </div>
+        <div class="ui" id="chips2"></div>
+        <div class="lossnote" id="lossnote" hidden><b>Why this loss rises while alignment improves.</b> It only scores
+          predicting each word of a single caption from the words before it, and it gets worse as the model memorises
+          the wording of the training captions (the paper sees the same for ordinary NTP). It never scores the
+          <code>[SEP]</code> position, so it doesn’t measure what h([SEP]) is read for. Over the same epochs, h([SEP])
+          R@1 rises from 17.5% at the loss minimum (epoch 20) to 24.5% at epoch 200.</div>
+        <div id="chart2"></div>
+        <figcaption>Solid lines are the alternative readout, dashed lines the readout the paper uses. Paired NTP: every
+          10 epochs from the run’s own validation dumps (bf16). Other runs: saved checkpoints re-embedded in fp32. One
+          seed each. Validation loss is single-caption next-token loss on val+test captions (used for the paper’s
+          early-stopped row); because single captions have only ignored padding after [SEP], it never scores predicting
+          <em>b</em> from <em>a</em>.</figcaption>
+      </figure>
+
+      <h3>All numbers</h3>
+      <div class="tw">
+        <table id="t1"></table>
+      </div>
+      <p class="note">Bold marks the better readout per model. Paper values are three-seed means ± half-range; ours are
+        single seeds.</p>
+
+      <h3>Without a fitted map</h3>
+      <p>Because fitting an orthogonal map could flatter a weaker representation, I also checked three of the paper’s
+        map-free text evaluations: caption→caption retrieval, STS-B sentence similarity, and the Table 6 “scene share”
+        estimator (variance explained by the shared image rather than caption wording). At h([SEP]), paired NTP closes
+        most of the gap to the JEPA on all three (caption retrieval 36.7% → 53.8% vs 60.6%), and conditional NTP
+        slightly exceeds the JEPA on each. These three metrics are text-only; on mutual 10-NN against DINOv2, the JEPA
+        still leads.</p>
+      <div class="tw">
+        <table id="tMF"></table>
+      </div>
+      <p class="note">Single seeds, 200 epochs. Paired NTP: Claude-run with the authors’ code; conditional NTP and the
+        JEPA: GPT-run. More tasks and readouts in Appendix A1.</p>
+
+      <h2>At web scale: the 2M Recap point</h2>
+
+      <p>To test beyond Flickr, I trained paired BERT-S NTP on the smallest web-scale point in the paper’s scaling plot:
+        2.24M Recap-DataComp images (one alt-text and two LLaVA recaptions per image), following the exact schedule of
+        the Table 7 good-view JEPA control (20 × 1M samples, learning rate 10<sup>−4</sup>, gradient clip 1.0, one
+        seed).</p>
+
+      <p>Mean pooling again shows little gain from pairing: .075 WIT mutual 10-NN (vs .070–.071 for single-caption NTP)
+        and 23.2% Flickr R@1 (vs 22.3–24.6%). Reading h([SEP]) raises WIT mutual 10-NN to .093, close to the JEPA’s
+        range (.095–.115, mean .107), but only lifts Flickr R@1 to 25.3% against the JEPA’s 33.9%, a gap substantially larger than the seed variation
+        the paper reports.</p>
+
+      <p>Reading one token further by appending “the” (which starts nearly every Recap recaption) reaches .104 on WIT
+        and 30.1% on Flickr, though this was the best of ten readouts scored on the same test sets, so treat it as a lead rather than a result (Appendix A2). Testing the analogous pre-declared heuristic on Flickr by appending “a” (the most common first word in
+        Flickr) gave smaller, inconsistent changes: +2.1 points on 30k-pair retrieval and +0.016 on mutual 10-NN, but
+        −0.2 on 1k-pair retrieval, with +0.9 on 30k-pair retrieval for the JEPA control as well (Appendix A1). One
+        possible reason paired NTP lags further behind on Recap is that two of the three captions per image come from
+        the same LLaVA captioner, so predicting <em>b</em> from <em>a</em> also rewards matching generator style. That is untested.</p>
+      <div class="tw">
+        <table id="tWeb"></table>
+      </div>
+      <p class="note">One seed. WIT: the paper’s PRH protocol (per-layer features, best layer pair; the JEPA’s .107 is
+        mean-pooled). Flickr: final layer, rotation fitted on 30k pairs, frozen DINOv2. Full readout search, including
+        generated continuations, in Appendix A2.</p>
+
+      <h2>Readouts for frozen language models</h2>
+
+      <p>Pretrained LLM baselines in the paper are also mean-pooled over the raw caption. Appending a short prompt and
+        reading the final token’s hidden state (without generating tokens) substantially changes their scores. Prompted last-token embeddings are well known <a class="cite"
+          href="#ref-3" data-cite="3,4,5,6">[3–6]</a>; here they just show that the LLM baselines are also sensitive
+        to the readout:</p>
+      <pre><code>Caption: {A}
+Alternative caption of the same scene:</code></pre>
+      <p>Under the paper’s Flickr protocol (final layer, 30k-pair rotation), Qwen2.5-0.5B R@1 jumps from <b>24.1% to
+          35.4%</b> (14.0% to 22.2% with a 1k-pair fit), passing the Flickr-trained good-view JEPA (34.6%). On
+        Qwen2.5-1.5B, a continuation prompt reaches <b>42.9%</b> (raw caption 24.5%, alternative prompt 35.3%). On
+        WIT-1024, mutual 10-NN rises from <b>.102 to .138</b> (0.5B), <b>.108 to .155</b> (1.5B), and <b>.153 to
+          .170</b> (72B). The relative gain shrinks with scale, the continuation prompt hurts at 72B, and 72B remains
+        below the paper’s 109M web-trained JEPA (.184).</p>
+
+      <p>Prompt wording itself may matter less than providing a post-caption summary position: “Continuation of this
+        caption:” matches “Alternative caption of the same scene:” on 0.5B and beats it on 1.5B Flickr, whereas bare
+        markers like literal “[SEP]” or Qwen’s end-of-text token do not help (Appendix A3).</p>
+
+      <p>Closest to this, Wang et al. raise frozen Qwen3’s alignment with DINOv2 on WIT with sensory prompts
+        (“imagine what it would be like to see…”) <a class="cite" href="#ref-8" data-cite="8">[8]</a>. They let the model generate a continuation and average its
+        hidden states over the generated tokens and over all layers; in a single forward pass averaged over the input
+        tokens, the prompt did not help. The prompted last-token state here needs no generation. Wang et al. also find
+        that mean-pooling over generated tokens beats single-token readouts <a class="cite" href="#ref-7" data-cite="7">[7]</a>. Here, greedily generating an
+        alternative caption and pooling its states did not beat the single prompted last-token state (33.9% vs 35.4%
+        Flickr R@1 on 0.5B; Appendix A3), but that comparison reads single layers only. Averaging over all layers, which
+        Wang et al. find often beats any single layer <a class="cite" href="#ref-8" data-cite="8">[8]</a>, I haven’t tested yet.</p>
+
+      <figure id="fig3">
+        <h4>Figure 3 · Frozen Qwen2.5: raw caption vs prompted readout</h4>
+        <div class="ui"><label for="m3">Metric</label>
+          <select id="m3">
+            <option value="fl30k">Flickr R@1, rotation fitted on 30k pairs</option>
+            <option value="fl1k">Flickr R@1, rotation fitted on 1k pairs</option>
+            <option value="best">WIT-1024 mutual 10-NN, best layer pair (paper protocol)</option>
+            <option value="fixed">WIT-1024 mutual 10-NN, layers fixed to the baseline’s</option>
+          </select>
+        </div>
+        <div class="chart" id="chart3" role="group" aria-label="Bar chart of Qwen readouts"></div>
+        <div class="legend">
+          <span><i style="background:var(--qwen);opacity:.42"></i>raw caption, mean (paper)</span>
+          <span><i style="background:var(--qwen)"></i>prompt, last token</span>
+          <span id="ref3"></span>
+        </div>
+        <figcaption id="cap3"></figcaption>
+      </figure>
+
+      <h2>Conclusion</h2>
+
+      <p>On Flickr with 33M models, the paper’s paired control does not show that alignment gains come from the JEPA
+        objective rather than the pairing information. Evaluated at <code>[SEP]</code>, the paper’s own paired NTP
+        checkpoint gains 11 R@1 points and matches the good-view JEPA on retrieval through a rotation, while conditional
+        NTP surpasses it. Mean-pooling therefore understates what paired NTP learns, even though the JEPA still leads on
+        mutual 10-NN (.232 vs .170–.185) and on Flickr retrieval at the 2.24M-image Recap point (33.9% vs 25.3%).</p>
+
+      <p>Several confounds also remain untested. In the paper, hyperparameters were tuned only for the good-view JEPA, while NTP “use[s] the same recipe and [was] not tuned”;
+        each JEPA sample draws eight views from an image’s five captions whereas
+        paired NTP sees two; and the JEPA encoder is bidirectional while NTP is causal. All runs here use a single seed,
+        prompted LLM readouts were chosen after inspecting Flickr results, conditional NTP was not run at web scale, and
+        the paper’s largest regime (109M models on 940M images) is not tested here. I also haven’t gone through the theory (whose extension to NTP the authors note is
+        heuristic).</p>
+
+      <p>To reproduce the main Flickr result with the authors’ repository, train with
+        <code>train.py --modality text --objective ntp --caption-views</code> and extract features with
+        <code>evaluate.py embed &lt;checkpoint&gt; &lt;out&gt; --last-token</code> (where the last token of
+        <code>[CLS] a [SEP]</code> is <code>[SEP]</code>).</p>
+
+      <p class="note"><b>Disclosure.</b> LLMs from OpenAI, Anthropic and Google wrote and reviewed the code, and helped
+        edit this post. Two independently written pipelines reproduce the paper’s baselines (ordinary NTP 11.1% vs
+        reported 11.8%, paired NTP 13.2% vs 13.7%, good-view JEPA 24.9% vs 24.6%, Qwen2.5-0.5B WIT .102 vs .102) and
+        agree on the h([SEP]) effect.</p>
+
+      <h2>Additional results</h2>
+
+      <details>
+        <summary>A1 · More Flickr results</summary>
+        <h4>Other tasks</h4>
+        <p class="note">The same frozen 200-epoch checkpoints and readouts as in Figure 1, on tasks without a fitted
+          image map (except COCO). Ordinary and conditional NTP and the JEPA were scored by the GPT-run pipeline. Paired
+          NTP was scored with a reimplementation of the same protocols, which reproduces the GPT-run numbers exactly on
+          its 139-epoch checkpoint.</p>
+        <div class="tw">
+          <table id="tA1"></table>
+        </div>
+
+        <h4>JEPA readouts</h4>
+        <div class="tw">
+          <table id="tA3"></table>
+        </div>
+        
+        <h4>Control: caption pairs from different images</h4>
+        <p class="note">To check whether h([SEP]) benefits simply from having any second caption after
+          <code>[SEP]</code>, the 25-epoch GPT-run pilot included a shuffled control. It matches conditional NTP (loss
+          only on <em>b</em>), except caption <em>a</em> comes from a different image in the batch. With unrelated
+          context, the model ignores <em>a</em>: single-caption embeddings collapse to effective rank ~1, and alignment
+          drops to chance under both readouts. These are 25-epoch pilot checkpoints from an earlier training loop, not the 200-epoch runs; in those,
+          h([SEP]) only overtakes mean pooling after about 20–30 epochs (Figure 2).</p>
+        <div class="tw">
+          <table id="tA3c"></table>
+        </div>
+
+        <h4>Pre-declared check: appending “a”</h4>
+        <p class="note">To test whether reading one token into caption <em>b</em> also helps on Flickr, I appended “a”
+          (the most common first word in Flickr training captions, chosen before scoring) to give
+          <code>[CLS] a-caption [SEP] a</code>. Paired NTP is read at the appended “a”, while the JEPA is still read at
+          h([CLS]) as a control for adding the token (reading the JEPA at “a” performed much worse). Evaluated on the 200-epoch Figure 1 checkpoints; GPT-run (Codex), whose h([SEP]) and h([CLS]) numbers reproduce
+          ours: paired NTP improves on 30k-pair retrieval (+2.1), mutual 10-NN, and caption
+          retrieval, is flat on 1k-pair retrieval, and dips on STS-B; the JEPA control gains +0.9 on 30k-pair retrieval and a little on STS-B. One seed; not significant on its
+          own.</p>
+        <div class="tw">
+          <table id="tA7"></table>
+        </div>
+      </details>
+
+      <details>
+        <summary>A2 · Web-scale readout search (exploratory)</summary>
+        <p class="note">All readouts of the Recap paired-NTP checkpoint (final, seed 0) that were tried, reported equally.
+          Prefixes are appended after <code>[SEP]</code> as the beginning of a caption <em>b</em>; the state of the last
+          prefix token is read. Caption <em>a</em> is unchanged and nothing is generated. These were scored on the same
+          Flickr and WIT test sets, so the best entry is optimistically selected. GPT-run (Codex); its mean and h([SEP])
+          numbers match the Claude-run evaluation exactly.</p>
+        <p class="note">One untested reading of why “the” beats h([SEP]) here: in Recap, caption <em>b</em> is either
+          an alt-text (short, varied) or a LLaVA recaption (“The image shows…”). So part of what h([SEP]) is trained to
+          predict is which kind of caption comes next, which is about format rather than the scene. Appending “the”
+          settles that, and the state can encode content instead. On Flickr all captions are of one kind, which would
+          fit appending “a” helping only a little there (Appendix A1). The final-layer state at “the” itself mostly
+          predicts “image”, but like h([SEP]) it gets its scene content from the lower layers, where all of
+          <em>b</em>’s later tokens attend to it.</p>
+        <div class="tw">
+          <table id="tA6"></table>
+        </div>
+        <p class="note">Generating a continuation and pooling its hidden states (8 or 32 greedy tokens, with or without a
+          prefix) reaches at most 31.4% Flickr R@1 (30k) and .094 on WIT: no clear gain over appending “the”, and worse on WIT. Wang et al. report that pooling generated tokens beats
+          single tokens for pretrained LLMs <a class="cite" href="#ref-7" data-cite="7">[7]</a>; this small trained model doesn’t show that.</p>
+      </details>
+
+      <details>
+        <summary>A3 · Frozen Qwen2.5: all 15 readout conditions</summary>
+        <p class="note">Hover a condition for its exact input and pooling. WIT columns use the PRH protocol (best layer
+          pair). The Flickr column uses the paper’s Flickr protocol: final layer, rotation fitted on 30k pairs, R@1
+          among 1,000 test captions.</p>
+        <div class="tw">
+          <table id="tA2"></table>
+        </div>
+      </details>
+
+      <details>
+        <summary>A4 · Methods, reproduction and caveats</summary>
+        <ul class="note">
+          <li><b>Metrics.</b> Mutual 10-NN and R@1 follow the authors’ <code>prh.metrics.alignment</code>. The 1,014
+            validation pairs (or 30,014 train+validation pairs) fit the means and one orthogonal map. Scores are on the
+            1,000 Flickr test pairs, using one caption per image.</li>
+          <li><b>Readouts.</b> All are from the final layer. “Mean” averages all non-padding positions, including [CLS]
+            and [SEP]. h([SEP]) is the state at the final [SEP] of <code>[CLS] a [SEP]</code>. Evaluation inputs never
+            contain a second caption.</li>
+          <li><b>Uncertainty.</b> Every training arm has one seed. The paper’s seed spread for paired NTP is ±0.4 (1k)
+            and ±1.6 (30k) points. With 1,000 test queries, the standard error of R@1 near 25% is about 1.4 points. The
+            h([SEP]) gain for paired NTP (+11 points) is far outside both, but the smaller differences between
+            conditional NTP and JEPA are not.</li>
+          <li><b>Selection.</b> The Flickr test set was looked at repeatedly while exploring readouts. h([SEP]) was
+            proposed beforehand, for the mechanistic reason above, but the prompt variants for frozen LLMs were not.
+          </li>
+        
+          <li>The JEPA was trained with the authors’ code and default recipe. The seed-0 run collapsed around epoch 98,
+            when its h([CLS]) became nearly constant and R@1 fell to 0.2%. The seed-1 run shown here stayed healthy and
+            matches the paper (24.9% vs 24.6%, mutual 10-NN .232 vs .232).</li>
+          <li>The paired NTP run was also trained with the authors’ unchanged code (prh-proof <code>a2b9949</code>,
+            stable-pretraining <code>ab836bf</code>, PyTorch 2.11) on one H100. The conditional run used the same pinned
+            code, with only the loss mask changed.</li>
+          <li>Flickr-trained models of every kind barely transfer to WIT-1024 (mutual 10-NN ≈ .03), as the paper also
+            notes, so I don’t use WIT for them.</li>
+        </ul>
+      </details>
+
+      <h2>References</h2>
+      <ol class="refs">
+        <li id="ref-1">R. Balestriero, Y. LeCun. <a href="https://arxiv.org/abs/2610.39302">Proving and Improving the Platonic
+            Representation Hypothesis with JEPAs</a>. arXiv:2610.39302, 2026. Code: <a
+            href="https://github.com/galilai-group/prh-proof">galilai-group/prh-proof</a>.</li>
+        <li id="ref-2">M. Huh, B. Cheung, T. Wang, P. Isola. <a href="https://arxiv.org/abs/2405.07987">The Platonic Representation
+            Hypothesis</a>. ICML 2024.</li>
+        <li id="ref-3">T. Jiang et al. <a href="https://arxiv.org/abs/2307.16645">Scaling Sentence Embeddings with Large Language
+            Models</a> (PromptEOL). arXiv:2307.16645, 2023.</li>
+        <li id="ref-4">J. Springer et al. <a href="https://arxiv.org/abs/2402.15449">Repetition Improves Language Model
+            Embeddings</a> (echo embeddings). arXiv:2402.15449, 2024.</li>
+        <li id="ref-5">S. L. Wang, P. Isola, B. Cheung. <a href="https://arxiv.org/abs/2510.02425">Words That Make Language Models Perceive</a>. arXiv:2510.02425, 2025.</li>
+        <li id="ref-6">S. Zhuang, X. Ma, B. Koopman, J. Lin. <a href="https://arxiv.org/abs/2404.18424">PromptReps:
+            Prompting Large Language Models to Generate Dense and Sparse Representations for Zero-Shot Document
+            Retrieval</a>. arXiv:2404.18424, 2024.</li>
+        <li id="ref-7">S. L. Wang, P. Isola, B. Cheung. <a href="https://arxiv.org/abs/2605.09969">The Truth Lies
+            Somewhere in the Middle (of the Generated Tokens)</a>. arXiv:2605.09969, 2026.</li>
+        <li id="ref-8">S. L. Wang, P. Isola, B. Cheung. <a href="https://arxiv.org/abs/2510.02425">Words That
+            Make Language Models Perceive</a>. arXiv:2510.02425, 2025.</li>
+      </ol>
+
+      <details class="bib" open>
+        <summary>Citation if needed.</summary>
+        <div class="bibcard">
+          <div class="bibbar"><i></i><i></i><i></i><span>BIBTEX</span><button type="button" id="bibcopy">COPY</button></div>
+<pre><code id="bibtex"><span class="bk">@article</span><span class="bp">{</span><span class="bid">bernwald2026goodviews</span><span class="bp">,</span>
+  <span class="bk">title</span>  <span class="bp">=</span> <span class="bs">"Good Views Hidden in Plain Sight"</span><span class="bp">,</span>
+  <span class="bk">author</span> <span class="bp">=</span> <span class="bs">"Bernwald, Thomas"</span><span class="bp">,</span>
+  <span class="bk">year</span>   <span class="bp">=</span> <span class="bs">"2026"</span><span class="bp">,</span>
+  <span class="bk">month</span>  <span class="bp">=</span> <span class="bs">"November"</span><span class="bp">,</span>
+  <span class="bk">url</span>    <span class="bp">=</span> <span class="bs">"https://thomasaas.github.io/good-views.html"</span>
+<span class="bp">}</span></code></pre>
+        </div>
+      </details>
+    </article>
+  </main>
+
+  <div class="tip" id="tip" role="tooltip"></div>
+
+  <script>
+    (function () {
+      "use strict";
+      /* ---------- explainers ---------- */
+      const MET = {
+        r1k: {
+          name: "R@1 · 1k-pair rotation", unit: "%", max: 40, ticks: [0, 10, 20, 30, 40],
+          tip: "Image→caption retrieval among the 1,000 Flickr test captions. DINOv2 image embeddings are mapped into the text space with one orthogonal (Procrustes) map fitted on the 1,014 validation pairs. Chance: 0.1%. The paper calls this its direct test of “equality up to rotation”."
+        },
+        r30k: {
+          name: "R@1 · 30k-pair rotation", unit: "%", max: 50, ticks: [0, 10, 20, 30, 40, 50],
+          tip: "Same retrieval task, but the orthogonal map is fitted on all 30,014 Flickr train+validation pairs. More pairs estimate the rotation better (Table 2, last column of the paper)."
+        },
+        mknn: {
+          name: "Mutual 10-NN", unit: "", max: 0.30, ticks: [0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30],
+          tip: "For each of the 1,000 test pairs, the fraction of its 10 nearest neighbours shared between image space and text space (centred with validation means). Fits nothing and uses no pairs. Chance ≈ 0.01. This is the metric of the original PRH paper."
+        },
+        loss: { name: "Validation loss", unit: "", min: 2.5, max: 5.25, ticks: [2.5, 3, 3.5, 4, 4.5, 5] }
+      };
+      const RO = {
+        mean: "<b>Mean pooling</b>: average of the final-layer hidden states over all non-padding tokens of <code>[CLS] a [SEP]</code>, including [CLS] and [SEP].",
+        sep: "<b>h([SEP])</b>: final-layer hidden state at the [SEP] after caption a. In paired training, this is the position that predicts the first token of the other caption b. In single-caption training it never receives a loss.",
+        cls: "<b>h([CLS])</b>: final-layer [CLS] state of the bidirectional JEPA encoder. It is the paper’s Flickr readout and the input to the projector, whose output the JEPA loss acts on.",
+        proj: "<b>h([CLS]) → projector</b>: the JEPA’s 512-d projector output, i.e. exactly the vector the training loss sees."
+      };
+      const MOD = {
+        ordinary: {
+          name: "Ordinary NTP", color: "var(--ordinary)", sub: "one caption",
+          tip: "Causal BERT-S (33M) trained to predict the next token of one caption per image per epoch. 200 epochs, seed 0. Trained with a GPT-written loop that replicates the paper’s recipe."
+        },
+        paired: {
+          name: "Paired NTP", color: "var(--paired)", sub: "the paper’s control",
+          tip: "Causal BERT-S trained on <code>[CLS] a [SEP] b [SEP]</code>, where a and b are two captions of the same image, with token loss on both captions. This is the paper’s own control (Sec. 3.1), trained with the authors’ unchanged code: 200 epochs, seed 0, one H100. An independent GPT-run replicate stopped at epoch 139 gives 14.0% → 22.2% (1k) and 26.1% → 31.5% (30k)."
+        },
+        conditional: {
+          name: "Conditional NTP", color: "var(--conditional)", sub: "loss only on b",
+          tip: "Same input, code, initialization and schedule as paired NTP, but token loss only on caption b and its final [SEP]. Caption a is context; it still receives gradients through b’s loss. Both caption orders are sampled. 200 epochs, seed 0."
+        },
+        jepa: {
+          name: "Good-view JEPA", color: "var(--jepa)", sub: "LeJEPA, caption views",
+          tip: "Bidirectional BERT-S trained with LeJEPA. Its 2 global + 6 local views are trimmed and masked captions, each drawn independently (with replacement) from the captions of the same image (good views). Authors’ code and default recipe, 200 epochs, seed 1 (seed 0 collapsed near epoch 98)."
+        }
+      };
+      const SRC_MINE = "Claude-run, authors’ code";
+      const SRC_GPT = "GPT-run";
+
+      /* ---------- figure 1 data ---------- */
+      const F1 = [
+        {
+          m: "ordinary", src: SRC_GPT, ref: { r1k: "11.8 ± 0.2", r30k: "21.3 ± 0.4", mknn: ".122 ± .001" }, refv: { r1k: 11.8, r30k: 21.3, mknn: .122 }, paperRO: "mean",
+          bars: [{ ro: "mean", v: { r1k: 11.1, r30k: 19.9, mknn: .1225 } }, { ro: "sep", v: { r1k: 6.6, r30k: 12.4, mknn: .0492 } }]
+        },
+        {
+          m: "paired", src: SRC_MINE, ref: { r1k: "13.7 ± 0.4", r30k: "24.7 ± 1.6", mknn: ".132 ± .002" }, refv: { r1k: 13.7, r30k: 24.7, mknn: .132 }, paperRO: "mean",
+          bars: [{ ro: "mean", v: { r1k: 13.2, r30k: 23.9, mknn: .1273 } }, { ro: "sep", v: { r1k: 24.5, r30k: 32.1, mknn: .1695 } }]
+        },
+        {
+          m: "conditional", src: "GPT-run, authors’ code with the loss mask changed", ref: null, paperRO: "mean",
+          bars: [{ ro: "mean", v: { r1k: 22.2, r30k: 33.5, mknn: .1654 } }, { ro: "sep", v: { r1k: 27.8, r30k: 38.3, mknn: .1851 } }]
+        },
+        {
+          m: "jepa", src: "GPT-run, authors’ code", ref: { r1k: "24.6 ± 1.5", r30k: "34.6 ± 0.7", mknn: ".232 ± .006" }, refv: { r1k: 24.6, r30k: 34.6, mknn: .232 }, paperRO: "cls",
+          bars: [{ ro: "mean", v: { r1k: 16.7, r30k: 28.5, mknn: .1200 } }, { ro: "cls", v: { r1k: 24.9, r30k: 33.4, mknn: .2321 } }]
+        }
+      ];
+      const ROLAB = { mean: "mean", sep: "h([SEP])", cls: "h([CLS])", proj: "projector" };
+      const fmt = (v, key) => key === "mknn" ? v.toFixed(3).replace(/^0/, "") : key === "loss" ? v.toFixed(2) : v.toFixed(1) + "%";
+
+      /* ---------- tooltip ---------- */
+      const tip = document.getElementById("tip");
+      let pinned = null;
+      function showTip(el, x, y) {
+        const html = el.__tip || el.getAttribute("data-tip-html");
+        if (!html) return;
+        tip.innerHTML = html; tip.classList.add("on");
+        const r = el.getBoundingClientRect();
+        const px = x != null ? x : r.left + r.width / 2, py = y != null ? y : r.top;
+        const tw = tip.offsetWidth, th = tip.offsetHeight;
+        let left = Math.min(Math.max(8, px - tw / 2), window.innerWidth - tw - 8);
+        let top = py - th - 12; if (top < 8) top = (y != null ? y : r.bottom) + 14;
+        tip.style.left = left + "px"; tip.style.top = top + "px";
+      }
+      function hideTip() { tip.classList.remove("on"); }
+      function bindTip(el, html) {
+        el.__tip = html;
+        if (!el.hasAttribute("tabindex") && !/^(BUTTON|A)$/.test(el.tagName) && el.tagName.toLowerCase() !== "circle") el.setAttribute("tabindex", "0");
+        if (el.tagName.toLowerCase() === "circle") el.setAttribute("tabindex", "0");
+        el.setAttribute("data-tip", "");
+        el.addEventListener("mouseenter", e => { if (!pinned) showTip(el, e.clientX, e.clientY); });
+        el.addEventListener("mousemove", e => { if (!pinned) showTip(el, e.clientX, e.clientY); });
+        el.addEventListener("mouseleave", () => { if (!pinned) hideTip(); });
+        el.addEventListener("focus", () => showTip(el));
+        el.addEventListener("blur", () => { if (pinned === el) pinned = null; hideTip(); });
+        el.addEventListener("click", e => { e.stopPropagation(); if (pinned === el) { pinned = null; hideTip(); } else { pinned = el; showTip(el, e.clientX, e.clientY); } });
+      }
+      document.addEventListener("click", () => { pinned = null; hideTip(); });
+      document.addEventListener("keydown", e => { if (e.key === "Escape") { pinned = null; hideTip(); } });
+      window.addEventListener("scroll", () => { if (!pinned) hideTip(); }, { passive: true });
+
+      /* ---------- figure 1 ---------- */
+      function drawF1() {
+        const key = document.getElementById("m1").value, M = MET[key], host = document.getElementById("chart1");
+        host.innerHTML = "";
+        F1.forEach(g => {
+          const mod = MOD[g.m];
+          const grp = document.createElement("div"); grp.className = "grp";
+          const nm = document.createElement("div"); nm.className = "grp-name";
+          nm.innerHTML = `<span class="dot" style="background:${mod.color}"></span>${mod.name}<span>${mod.sub}</span>`;
+          bindTip(nm, `<b>${mod.name}</b><br>${mod.tip}`);
+          grp.appendChild(nm);
+          g.bars.forEach(b => {
+            const isPaper = b.ro === g.paperRO, v = b.v[key];
+            const row = document.createElement("div"); row.className = "row";
+            const lab = document.createElement("div"); lab.className = "rlab"; lab.textContent = ROLAB[b.ro];
+            if (isPaper) lab.title = "readout used in the paper";
+            const tr = document.createElement("div"); tr.className = "track";
+            const bar = document.createElement("button"); bar.className = "bar" + (isPaper ? " soft" : "");
+            bar.style.background = mod.color;
+            const pct = Math.min(100, (key === "mknn" ? v : v) / M.max * 100);
+            bar.style.width = pct + "%";
+            bar.setAttribute("aria-label", `${mod.name}, ${ROLAB[b.ro]}: ${fmt(v, key)}`);
+            const other = g.bars.find(x => x !== b).v[key];
+            const delta = key === "mknn" ? (v - other).toFixed(3) : (v - other).toFixed(1) + " pts";
+            bindTip(bar, `<b>${mod.name} · ${ROLAB[b.ro]}${isPaper ? " (paper’s readout)" : ""}</b><span class="tv">${fmt(v, key)}</span>${RO[b.ro]}<br><br><b>${M.name}:</b> ${M.tip}` +
+              (g.ref && isPaper ? `<br><br>Paper reports ${g.ref[key]} (3 seeds).` : "") +
+              `<br>Difference to the other readout: ${v >= other ? "+" : ""}${delta}.<span class="src">${g.src} · one seed · 200 epochs</span>`);
+            const val = document.createElement("span"); val.className = "val"; val.textContent = fmt(v, key);
+            const refPct = g.ref && isPaper ? g.refv[key] / M.max * 100 : 0;
+            val.style.left = `calc(${Math.max(pct, refPct)}% + 6px)`;  // always right of the bar: readable in both themes, clear of the bar's colour
+            tr.appendChild(bar); tr.appendChild(val);
+            if (g.ref && isPaper) {
+              const rf = document.createElement("span"); rf.className = "ref"; rf.style.left = (g.refv[key] / M.max * 100) + "%";
+              bindTip(rf, `<b>Paper, ${mod.name}</b><span class="tv">${g.ref[key]}</span>Reported in Table 2 of [1]: mean ± half-range over three seeds, with the paper’s readout.`);
+              tr.appendChild(rf);
+            }
+            row.appendChild(lab); row.appendChild(tr); grp.appendChild(row);
+          });
+          host.appendChild(grp);
+        });
+        const ax = document.createElement("div"); ax.className = "axis";
+        ax.innerHTML = `<div></div><div class="ticks">${M.ticks.map(t => `<span style="left:${t / M.max * 100}%">${key === "mknn" ? t.toFixed(2) : t + "%"}</span>`).join("")}</div>`;
+        host.appendChild(ax);
+      }
+      document.getElementById("m1").addEventListener("change", drawF1);
+
+      /* ---------- figure 2 data ---------- */
+      const E21 = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200];
+      const S2 = [
+        {
+          id: "paired-sep", m: "paired", ro: "sep", dash: false, x: E21,
+          r1k: [.7, 9.3, 17.5, 19.4, 21.4, 21.9, 21.7, 23.4, 22.1, 21.6, 22.1, 23.1, 23.3, 23.9, 23.9, 24.4, 24.2, 24.7, 24.7, 24.3, 24.3],
+          mknn: [.0158, .1093, .1459, .1561, .1645, .1633, .1668, .1706, .1674, .1657, .1691, .1688, .1683, .1705, .1685, .1678, .1708, .1689, .1681, .1698, .1693]
+        },
+        {
+          id: "paired-mean", m: "paired", ro: "mean", dash: true, x: E21,
+          r1k: [4.5, 11.5, 16.0, 16.8, 17.1, 15.0, 15.0, 15.0, 16.1, 14.5, 14.6, 13.6, 14.4, 14.6, 14.1, 13.5, 13.7, 13.7, 13.1, 13.4, 13.2],
+          mknn: [.0351, .1133, .1372, .1393, .1364, .1333, .1313, .1315, .1294, .1333, .1283, .1273, .1308, .1255, .1278, .1284, .1279, .1276, .1276, .1275, .1273],
+          loss: [null, 3.200, 3.000, 3.011, 3.119, 3.251, 3.435, 3.627, 3.818, 4.010, 4.198, 4.344, 4.489, 4.627, 4.716, 4.813, 4.868, 4.931, 4.958, 4.967, 4.970]
+        },
+        {
+          id: "cond-sep", m: "conditional", ro: "sep", dash: false, x: [0, 10, 20, 30, 50, 100, 150, 200],
+          r1k: [.5, 13.7, 20.5, 23.2, 26.4, 28.8, 27.9, 27.8], mknn: [.0169, .1339, .1661, .1729, .1798, .186, .186, .1851]
+        },
+        {
+          id: "cond-mean", m: "conditional", ro: "mean", dash: true, x: [0, 10, 20, 30, 50, 100, 150, 200],
+          r1k: [4.6, 16.9, 19.0, 20.6, 20.5, 20.9, 20.3, 22.2], mknn: [.0359, .1521, .162, .1609, .173, .1651, .1639, .1654]
+        },
+        {
+          id: "jepa-cls", m: "jepa", ro: "cls", dash: true, x: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200],
+          r1k: [16.3, 22.5, 22.1, 24.1, 23.3, 25.1, 25.1, 26.4, 25.2, 24.8, 26.9, 25.8, 25.5, 25.9, 25.6, 25.1, 25.0, 24.3, 24.9, 24.9],
+          mknn: [.1956, .2159, .2269, .2276, .2295, .2284, .2303, .2333, .2332, .2314, .2348, .2316, .234, .2304, .2326, .2329, .2327, .2323, .2329, .2321]
+        },
+        {
+          id: "ord-mean", m: "ordinary", ro: "mean", dash: true, x: [0, 10, 25, 50, 100, 150, 200],
+          r1k: [4.6, 7.5, 14.0, 14.6, 13.7, 11.9, 11.1], mknn: [.0359, .0848, .1266, .128, .1239, .1184, .1225]
+        },
+        {
+          id: "ord-sep", m: "ordinary", ro: "sep", dash: false, x: [0, 10, 25, 50, 100, 150, 200],
+          r1k: [.5, 5.1, 10.0, 12.1, 7.9, 5.8, 6.6], mknn: [.0169, .0711, .1057, .0953, .0653, .0512, .0492]
+        }
+      ];
+      const vis2 = { "paired-sep": true, "paired-mean": true, "cond-sep": true, "cond-mean": false, "jepa-cls": true, "ord-mean": false, "ord-sep": false };
+      const chips = document.getElementById("chips2");
+      S2.forEach(s => {
+        const c = document.createElement("button"); c.className = "chip"; c.type = "button";
+        c.setAttribute("aria-pressed", vis2[s.id]);
+        c.innerHTML = `<span class="sw${s.dash ? " dash" : ""}" style="background:${MOD[s.m].color}"></span>${MOD[s.m].name} · ${ROLAB[s.ro]}`;
+        c.addEventListener("click", e => { e.stopPropagation(); vis2[s.id] = !vis2[s.id]; c.setAttribute("aria-pressed", vis2[s.id]); drawF2(); });
+        chips.appendChild(c);
+      });
+      function drawF2() {
+        const key = document.getElementById("m2").value, M = MET[key], host = document.getElementById("chart2");
+        const W = 700, H = 300, L = 46, R = 14, T = 12, B = 36;
+        const xs = x => L + x / 200 * (W - L - R), lo = M.min || 0, ys = y => T + (1 - (y - lo) / (M.max - lo)) * (H - T - B);
+        const ns = "http://www.w3.org/2000/svg";
+        const svg = document.createElementNS(ns, "svg"); svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("width", "100%");
+        svg.setAttribute("role", "img"); svg.setAttribute("aria-label", "Line chart: " + M.name + " over training epochs");
+        const add = (tag, attrs, parent) => { const e = document.createElementNS(ns, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); (parent || svg).appendChild(e); return e; };
+        M.ticks.forEach(t => { add("line", { x1: L, x2: W - R, y1: ys(t), y2: ys(t), class: "grid" }); const tx = add("text", { x: L - 6, y: ys(t) + 4, "text-anchor": "end" }); tx.textContent = key === "r1k" ? t + "%" : key === "mknn" ? t.toFixed(2) : t; });
+        [0, 50, 100, 150, 200].forEach(t => { const tx = add("text", { x: xs(t), y: H - B + 16, "text-anchor": "middle" }); tx.textContent = t; });
+        const xl = add("text", { x: (L + W - R) / 2, y: H - 4, "text-anchor": "middle" }); xl.textContent = "training epochs";
+        if (key === "r1k") {
+          add("line", { x1: L, x2: W - R, y1: ys(24.6), y2: ys(24.6), stroke: "var(--jepa)", "stroke-dasharray": "2 4", "stroke-width": 1.2 });
+          const t = add("text", { x: L + 6, y: ys(24.6) - 5, "text-anchor": "start" }); t.textContent = "paper JEPA 24.6%";
+        }
+        if (key === "mknn") {
+          add("line", { x1: L, x2: W - R, y1: ys(.232), y2: ys(.232), stroke: "var(--jepa)", "stroke-dasharray": "2 4", "stroke-width": 1.2 });
+          const t = add("text", { x: L + 6, y: ys(.232) - 5, "text-anchor": "start" }); t.textContent = "paper JEPA .232";
+        }
+        if (key === "loss") {
+          const note = (x, y, anchor, lines) => lines.forEach((ln, i) => {
+            const t = add("text", { x: x, y: y + i * 15, "text-anchor": anchor, fill: "var(--fg)", "font-size": 12 });
+            t.textContent = ln;
+          });
+          note(xs(20) + 4, ys(2.82), "start", ["lowest loss: early stopping would pick epoch 20", "→ h([SEP]) R@1 17.5%"]);
+          note(xs(200), ys(4.3), "end", ["epoch 200, the checkpoint used here", "→ h([SEP]) R@1 24.5%"]);
+        }
+        S2.forEach(s => {
+          if (!vis2[s.id] || !s[key]) return;
+          const col = MOD[s.m].color, ys_ = s[key];
+          const pts = s.x.map((x, i) => [x, ys_[i]]).filter(p => p[1] != null);
+          add("polyline", { points: pts.map(p => xs(p[0]) + "," + ys(p[1])).join(" "), fill: "none", stroke: col, "stroke-width": 2.2, "stroke-dasharray": s.dash && key !== "loss" ? "6 4" : "none", "stroke-linejoin": "round" });
+          pts.forEach(p => {
+            const c = add("circle", { cx: xs(p[0]), cy: ys(p[1]), r: 4.2, fill: col, class: "pt" });
+            const extra = key === "loss" ? "Next-token loss on single validation+test captions (the criterion of the paper’s early-stopped row; its main results use final checkpoints): predicting each word of a caption from the words before it. It rises because the model memorises the wording of the training captions. It never scores the [SEP] position (its target is padding), so it says nothing about predicting b from a, which is what h([SEP]) encodes. The paper’s ordinary NTP shows the same rise after epoch ≈29." : M.tip;
+            bindTip(c, `<b>${MOD[s.m].name} · ${ROLAB[s.ro]}</b><span class="tv">${fmt(p[1], key)}</span>after ${p[0]} epochs${p[0] === 0 ? " (random initialization)" : ""}<br><br>${extra}`);
+          });
+        });
+        host.innerHTML = ""; host.appendChild(svg);
+      }
+      document.getElementById("m2").addEventListener("change", () => {
+        const k = document.getElementById("m2").value;
+        if (k === "loss") { Object.keys(vis2).forEach(id => vis2[id] = id === "paired-mean"); }
+        else if (!Object.values(vis2).some(v => v) || (vis2["paired-mean"] && Object.values(vis2).filter(v => v).length === 1)) { Object.assign(vis2, { "paired-sep": true, "paired-mean": true, "cond-sep": true, "jepa-cls": true }); }
+        chips.querySelectorAll(".chip").forEach((c, i) => c.setAttribute("aria-pressed", vis2[S2[i].id]));
+        chips.style.display = k === "loss" ? "none" : "";
+        document.getElementById("lossnote").hidden = k !== "loss";  // the loss belongs to the checkpoint, not to a readout
+        drawF2();
+      });
+
+      /* ---------- table 1 ---------- */
+      function cellTip(td, html) { bindTip(td, html); }
+      function buildT1() {
+        const t = document.getElementById("t1");
+        const head = ["Model · readout", "R@1 (1k)", "R@1 (30k)", "Mutual 10-NN"];
+        const keys = ["r1k", "r30k", "mknn"];
+        const thead = t.createTHead().insertRow();
+        head.forEach((h, i) => { const th = document.createElement("th"); th.textContent = h; if (i) bindTip(th, `<b>${MET[keys[i - 1]].name}</b><br>${MET[keys[i - 1]].tip}`); else bindTip(th, "Every row is a BERT-S (33M) text encoder trained on Flickr30k captions, scored against frozen DINOv2 ViT-B/14 on the 1,000 Flickr test images."); thead.appendChild(th); });
+        const tb = t.createTBody();
+        F1.forEach(g => {
+          const mod = MOD[g.m];
+          const best = {}; keys.forEach(k => best[k] = Math.max(...g.bars.map(b => b.v[k])));
+          g.bars.forEach(b => {
+            const r = tb.insertRow();
+            const c0 = r.insertCell(); c0.innerHTML = `<span class="dot" style="background:${mod.color}"></span>${mod.name} · ${ROLAB[b.ro]}${b.ro === g.paperRO ? " <span class='note'>(paper’s readout)</span>" : ""}`;
+            bindTip(c0, `<b>${mod.name}</b><br>${mod.tip}<br><br>${RO[b.ro]}`);
+            keys.forEach(k => {
+              const c = r.insertCell(); c.textContent = fmt(b.v[k], k); if (b.v[k] === best[k]) c.className = "best";
+              cellTip(c, `<b>${mod.name} · ${ROLAB[b.ro]}</b><span class="tv">${fmt(b.v[k], k)}</span><b>${MET[k].name}.</b> ${MET[k].tip}<span class="src">${g.src} · one seed</span>`);
+            });
+          });
+          if (g.ref) {
+            const r = tb.insertRow(); r.className = "sub";
+            const c0 = r.insertCell(); c0.textContent = `paper, ${ROLAB[g.paperRO]}`;
+            bindTip(c0, "Values reported in Table 2 of [1]: mean ± half-range over three seeds.");
+            keys.forEach(k => { const c = r.insertCell(); c.textContent = g.ref[k].replace(" ± ", "±"); cellTip(c, `<b>Paper · ${mod.name}</b><span class="tv">${g.ref[k]}</span>Table 2 of [1], three seeds, the paper’s readout.`); });
+          }
+        });
+        const extra = [["paper, bad-view JEPA", "13.3±0.7", "20.7±0.8", ".132±.001", "Bad-view JEPA: views are trimmed, masked spans of one caption. Table 2 of [1], h([CLS]) readout."],
+        ["paper, ordinary NTP early-stopped", "13.4±0.8", "–", ".124±.002", "Ordinary NTP selected at the epoch of lowest validation loss (≈29). Table 2 of [1]."]];
+        extra.forEach(e => { const r = tb.insertRow(); r.className = "sub"; e.slice(0, 4).forEach((v, i) => { const c = r.insertCell(); c.textContent = v; bindTip(c, e[4]); }); });
+      }
+
+      /* ---------- figure 3 ---------- */
+      const F3 = [
+        {
+          size: "Qwen2.5-0.5B", src: { wit: "WIT: GPT-run, matches the Gemini-run to 4 decimals", fl: "Flickr: GPT-run, paper’s Flickr protocol" },
+          raw: { best: .1021, fixed: .1021, fl30k: 24.1, fl1k: 14.0 }, alt: { best: .1378, fixed: .1238, fl30k: 35.4, fl1k: 22.2 }, cont: { best: .1390, fixed: .1243, fl30k: 36.6, fl1k: 23.0 },
+          paper: { best: ".102", fixed: ".102", fl30k: "24.0%", fl1k: "13.5%" }
+        },
+        {
+          size: "Qwen2.5-1.5B", src: { wit: "WIT: Gemini-run", fl: "Flickr: Claude-run in FP16 (FP16 reproduces the FP32 0.5B numbers within 0.2 pts)" },
+          raw: { best: .1078, fixed: null, fl30k: 24.5, fl1k: 16.9 }, alt: { best: .1549, fixed: null, fl30k: 35.3, fl1k: 23.2 }, cont: { best: .1496, fixed: null, fl30k: 42.9, fl1k: 28.9 },
+          paper: { best: ".108", fixed: ".108", fl30k: "no Flickr number", fl1k: "no Flickr number" }
+        },
+        {
+          size: "Qwen2.5-72B", src: { wit: "WIT: GPT-run, full BF16 on one B300", fl: "" },
+          raw: { best: .1531, fixed: .1531, fl30k: null, fl1k: null }, alt: { best: .1698, fixed: .1642, fl30k: null, fl1k: null }, cont: { best: .1460, fixed: .1304, fl30k: null, fl1k: null },
+          paper: { best: ".154", fixed: ".154", fl30k: "–", fl1k: "–" }
+        }
+      ];
+      const M3 = {
+        fl30k: {
+          max: 56, ticks: [0, 10, 20, 30, 40, 50], pct: true, ref: 34.6, refName: "paper’s good-view JEPA, BERT-S on Flickr (34.6%)",
+          refTip: "<b>Paper’s good-view JEPA, BERT-S (33M)</b><span class='tv'>34.6%</span>Trained on Flickr captions, R@1 with the 30k-pair rotation (Table 2 of [1], three seeds).",
+          what: "Flickr image→caption R@1 among 1,000 test captions, final hidden layer, one orthogonal map fitted on 30,014 train+val pairs (the paper’s Flickr protocol for pretrained models; paper baseline for Qwen2.5-0.5B: 24.0%).",
+          cap: "Flickr image→caption R@1 through one orthogonal map, final hidden layer (no layer search), 1,000 test images against frozen DINOv2 ViT-B/14. This is the paper’s Flickr protocol for pretrained models; it reports .135 / .240 for Qwen2.5-0.5B with the raw caption. 0.5B and 1.5B have been run (1.5B in FP16). The prompts were chosen after looking at results, so read these as exploratory."
+        },
+        fl1k: {
+          max: 38, ticks: [0, 10, 20, 30], pct: true, ref: 24.6, refName: "paper’s good-view JEPA, BERT-S on Flickr (24.6%)",
+          refTip: "<b>Paper’s good-view JEPA, BERT-S (33M)</b><span class='tv'>24.6%</span>Trained on Flickr captions, R@1 with the 1k-pair rotation (Table 2 of [1], three seeds).",
+          what: "Flickr image→caption R@1 among 1,000 test captions, final hidden layer, one orthogonal map fitted on the 1,014 validation pairs (paper baseline for Qwen2.5-0.5B: 13.5%).",
+          cap: "Flickr image→caption R@1 through one orthogonal map fitted on the 1,014 validation pairs, final hidden layer, 1,000 test images against frozen DINOv2 ViT-B/14. 0.5B and 1.5B have been run (1.5B in FP16)."
+        },
+        best: {
+          max: .23, ticks: [0, .05, .1, .15, .2], pct: false, ref: .184, refName: "paper’s 109M good-view JEPA, web text (.184)",
+          refTip: "<b>Paper’s 109M good-view JEPA</b><span class='tv'>.184</span>BERT-B trained on the texts of 940M Recap-DataComp images (Table 3 of [1]), mean-pooled under the same WIT protocol.",
+          what: "Mutual 10-NN against DINOv2 ViT-B/14 on WIT-1024, best image/text layer pair for this condition (the PRH protocol).",
+          cap: "Mutual 10-NN against DINOv2 ViT-B/14 on the 1,024 WIT pairs, using the PRH protocol of [2] (per-layer features, 95th-percentile clipping, L2 normalisation, best image/text layer pair). The prompts were chosen after looking at results, and layers are searched on the same 1,024 examples, so read these as exploratory. 1.5B was evaluated with an independent (Gemini-written) implementation; on 0.5B, both implementations agree to four decimals."
+        },
+        fixed: {
+          max: .23, ticks: [0, .05, .1, .15, .2], pct: false, ref: .184, refName: "paper’s 109M good-view JEPA, web text (.184)",
+          refTip: "<b>Paper’s 109M good-view JEPA</b><span class='tv'>.184</span>BERT-B trained on the texts of 940M Recap-DataComp images (Table 3 of [1]), mean-pooled under the same WIT protocol.",
+          what: "Mutual 10-NN on WIT-1024 with the layers fixed to the raw-caption baseline’s best pair, so the prompt cannot win by picking a different layer.",
+          cap: "Mutual 10-NN on WIT-1024 with image and text layers fixed to the raw-caption baseline’s best pair, so a prompt cannot win by choosing a different layer. Not saved for the 1.5B run."
+        }
+      };
+      const F3RO = {
+        raw: ["raw caption · mean", "<b>Paper’s readout</b>: the caption alone, mean of all token states at each layer."],
+        alt: ["alternative prompt", "Input <code>Caption: {A}\\nAlternative caption of the same scene:</code>. Hidden state of the final “:” token, with nothing generated."],
+        cont: ["continuation prompt", "Input <code>Caption: {A}\\nContinuation of this caption:</code>. Hidden state of the final “:” token, with nothing generated. A control for whether asking for an <em>alternative</em> matters."]
+      };
+      function drawF3() {
+        const mode = document.getElementById("m3").value, C = M3[mode], max = C.max, host = document.getElementById("chart3"); host.innerHTML = "";
+        const f3 = v => C.pct ? v.toFixed(1) + "%" : v.toFixed(3).replace(/^0/, "");
+        document.getElementById("cap3").textContent = C.cap;
+        document.getElementById("ref3").innerHTML = `<i style="border-left:2px dashed var(--jepa);height:12px;width:2px;border-radius:0"></i>${C.refName}`;
+        F3.forEach(g => {
+          const grp = document.createElement("div"); grp.className = "grp";
+          const nm = document.createElement("div"); nm.className = "grp-name"; nm.innerHTML = `<span class="dot" style="background:var(--qwen)"></span>${g.size}<span>paper reports ${g.paper[mode]}</span>`;
+          grp.appendChild(nm);
+          ["raw", "alt", "cont"].forEach(k => {
+            const v = g[k][mode], row = document.createElement("div"); row.className = "row";
+            const lab = document.createElement("div"); lab.className = "rlab"; lab.textContent = F3RO[k][0];
+            const tr = document.createElement("div"); tr.className = "track";
+            if (v == null) { tr.innerHTML = `<span class="val" style="left:6px;font-weight:400;color:var(--muted);background:none">${C.pct ? "not run yet" : "not saved for this run"}</span>`; }
+            else {
+              const bar = document.createElement("button"); bar.className = "bar" + (k === "raw" ? " soft" : ""); bar.style.background = "var(--qwen)"; bar.style.width = (v / max * 100) + "%";
+              const d = v - g.raw[mode];
+              const src = C.pct ? g.src.fl : g.src.wit;
+              bindTip(bar, `<b>${g.size} · ${F3RO[k][0]}</b><span class="tv">${f3(v)}</span>${F3RO[k][1]}<br><br>${C.what}${k !== "raw" ? `<br>Change vs raw mean: ${d >= 0 ? "+" : ""}${C.pct ? d.toFixed(1) + " pts" : d.toFixed(3)}` : ""}<span class="src">${src}</span>`);
+              const val = document.createElement("span"); val.className = "val"; val.style.left = `calc(${v / max * 100}% + 6px)`; val.textContent = f3(v);
+              tr.appendChild(bar); tr.appendChild(val);
+            }
+            const rf = document.createElement("span"); rf.className = "ref"; rf.style.left = (C.ref / max * 100) + "%"; rf.style.borderColor = "var(--jepa)";
+            bindTip(rf, C.refTip);
+            tr.appendChild(rf);
+            row.appendChild(lab); row.appendChild(tr); grp.appendChild(row);
+          });
+          host.appendChild(grp);
+        });
+        const ax = document.createElement("div"); ax.className = "axis";
+        ax.innerHTML = `<div></div><div class="ticks">${C.ticks.map(t => `<span style="left:${t / max * 100}%">${C.pct ? t + "%" : t.toFixed(2)}</span>`).join("")}</div>`;
+        host.appendChild(ax);
+      }
+      document.getElementById("m3").addEventListener("change", drawF3);
+
+      /* ---------- appendix tables ---------- */
+      function simpleTable(id, cols, rows) {
+        const t = document.getElementById(id), h = t.createTHead().insertRow();
+        cols.forEach((c, i) => { const th = document.createElement("th"); th.textContent = c[0]; if (c[1]) bindTip(th, c[1]); h.appendChild(th); });
+        const tb = t.createTBody();
+        rows.forEach(r => {
+          const tr = tb.insertRow(); if (r.cls) tr.className = r.cls;
+          r.cells.forEach((v, i) => { const td = tr.insertCell(); td.innerHTML = v == null ? "–" : v; const tipHtml = i === 0 ? r.tip : (cols[i][2] ? `<b>${r.cells[0].replace(/<[^>]+>/g, "")}</b><span class="tv">${v == null ? "–" : v}</span>${cols[i][2]}` : null); if (tipHtml) bindTip(td, tipHtml); });
+        });
+      }
+      const dot = m => `<span class="dot" style="background:${MOD[m].color}"></span>`;
+      const WEBTIP = { wit: "WIT-1024 mutual 10-NN against DINOv2 ViT-B/14, PRH protocol: per-layer features, 95th-percentile clipping, L2 normalisation, best image/text layer pair.",
+        r30k: MET.r30k.tip, mknn: MET.mknn.tip };
+      simpleTable("tWeb",
+        [["Model · readout"], ["WIT 10-NN", WEBTIP.wit, WEBTIP.wit], ["Flickr R@1 (30k)", WEBTIP.r30k, WEBTIP.r30k], ["Flickr 10-NN", WEBTIP.mknn, WEBTIP.mknn]],
+        [
+          { cls: "sub", cells: ["paper, ordinary NTP (3 seeds)", ".070–.071", "22.3–24.6%", "–"], tip: "The paper’s 2M point (recap2-text-ntp, texts of 2.16M images, 21.6M samples): next-token prediction on one text per image, mean-pooled." },
+          { cells: [dot("paired") + "Paired NTP · mean", ".075", "23.2%", ".103"], tip: "Paired NTP on the texts of 2.24M Recap images (recaptext:11), authors’ code, the schedule of the paper’s Table 7 JEPA control: 20 × 1M samples, lr 1e-4, clip 1.0. Seed 0.<br><br>" + RO.mean },
+          { cells: [dot("paired") + "Paired NTP · h([SEP])", ".093", "25.3%", ".140"], tip: "Same checkpoint.<br><br>" + RO.sep },
+          { cells: [dot("paired") + "Paired NTP · “the” <span class='note'>(exploratory)</span>", ".104", "30.1%", ".182"], tip: "Same checkpoint. Input <code>[CLS] a [SEP] the</code>; the state at “the” is read. “the” starts almost every Recap recaption. Best of ten readouts scored on these test sets, so optimistically selected (Appendix A2)." },
+          { cls: "sub", cells: ["paper, good-view JEPA (3 seeds)", ".107 (.095–.115)", "33.9%", "–"], tip: "The paper’s Table 7: BERT-S good-view JEPA on the same recaptext:11 texts (20 × 1M samples), mean-pooled on WIT, h([CLS]) on Flickr." }
+        ]);
+      simpleTable("tA6",
+        [["Readout"], ["Flickr R@1 (1k)", MET.r1k.tip, MET.r1k.tip], ["Flickr R@1 (30k)", MET.r30k.tip, MET.r30k.tip], ["Flickr 10-NN", MET.mknn.tip, MET.mknn.tip], ["WIT 10-NN", WEBTIP.wit, WEBTIP.wit]],
+        [
+          ["full mean (paper)", "16.4%", "23.2%", ".103", ".075", RO.mean],
+          ["h([SEP])", "16.5%", "25.3%", ".140", ".093", RO.sep],
+          ["last caption token", "10.9%", "19.7%", ".056", ".049", "State of the last word of a, before [SEP]."],
+          ["caption-only mean", "15.4%", "22.4%", ".096", ".072", "Mean over the tokens of a only, without [CLS] and [SEP]."],
+          ["mean without [SEP]", "15.5%", "22.5%", ".096", ".072", "Mean over [CLS] and a."],
+          ["“this image shows”", "14.8%", "23.0%", ".091", ".102", "<code>[CLS] a [SEP] this image shows</code>; state at “shows”."],
+          ["“the image shows”", "15.7%", "22.5%", ".087", ".102", "<code>[CLS] a [SEP] the image shows</code>; state at “shows”."],
+          ["“a photo of”", "15.6%", "23.9%", ".111", ".093", "<code>[CLS] a [SEP] a photo of</code>; state at “of”."],
+          ["“this text says”", "15.7%", "24.1%", ".153", ".062", "<code>[CLS] a [SEP] this text says</code>; state at “says”. A non-visual control."],
+          ["“the”", "<b>21.2%</b>", "<b>30.1%</b>", "<b>.182</b>", "<b>.104</b>", "<code>[CLS] a [SEP] the</code>; state at “the”, the first word of almost every Recap recaption."]
+        ].map(r => ({ cells: r.slice(0, 5), tip: "<b>" + r[0] + "</b><br>" + r[5] })));
+      simpleTable("tA7",
+        [["Metric"],
+         ["NTP · h([SEP])", "Paired NTP, state at [SEP] of [CLS] a [SEP].", "Paired NTP, h([SEP])."],
+         ["NTP · “a”", "Paired NTP, input [CLS] a [SEP] a, state at the appended “a”.", "Paired NTP, state at the appended “a”."],
+         ["JEPA · h([CLS])", "Good-view JEPA, h([CLS]) of [CLS] a [SEP].", "JEPA, h([CLS]) without the extra token."],
+         ["JEPA · h([CLS]) + “a”", "Good-view JEPA, h([CLS]) of [CLS] a [SEP] a: a control for adding the token.", "JEPA, h([CLS]) with “a” appended."]],
+        [
+          ["Flickr R@1, 1k fit", "24.5%", "24.3%", "24.9%", "24.9%", MET.r1k.tip],
+          ["Flickr R@1, 30k fit", "32.2%", "34.3%", "33.4%", "34.3%", MET.r30k.tip],
+          ["Mutual 10-NN", ".169", ".185", ".232", ".232", MET.mknn.tip],
+          ["Caption→caption R@1", "53.8%", "55.3%", "60.6%", "61.1%", "Text only: each of the 5,000 Flickr test captions retrieves among the other 4,999; a hit is one of the 4 other captions of the same image."],
+          ["STS-B Spearman", ".582", ".574", ".561", ".572", "Spearman correlation with human similarity ratings on STS-B test, centred cosine."],
+          ["Scene share (k = 32)", ".791", ".795", ".803", ".804", "The paper’s nuisance estimator (Table 6): fraction of the whitened top-32 caption variance explained by the image."],
+          ["COCO R@1 (Flickr means)", "5.4%", "5.7%", "6.8%", "6.9%", "Rotation fitted on 30,014 Flickr pairs, image→caption R@1 among 5,000 COCO test captions."]
+        ].map(r => ({ cells: r.slice(0, 5), tip: "<b>" + r[0] + "</b><br>" + r[5] })));
+      simpleTable("tMF",
+        [["Model · readout"],
+         ["Caption→caption R@1", "Text only, no map. Each of the 5,000 Flickr test captions retrieves among the other 4,999; a hit is one of the 4 other captions of the same image (paper, Table 5).", "Caption→caption R@1 on the 5,000 Flickr test captions, self excluded."],
+         ["STS-B", "Spearman correlation with human similarity ratings on STS-B test (1,379 pairs), centred cosine (paper, Appendix C).", "STS-B Spearman, centred cosine."],
+         ["Scene share", "The paper’s nuisance estimator (Table 6), k = 32: fraction of the whitened top-32 caption variance explained by the image rather than by the wording.", "Scene-explained fraction at k = 32 (higher = more scene, less wording)."],
+         ["Mutual 10-NN", MET.mknn.tip, MET.mknn.tip]],
+        [
+          { cells: [dot("paired") + "Paired · mean", "36.7%", ".447", ".633", ".127"], tip: MOD.paired.tip + "<br><br>" + RO.mean },
+          { cells: [dot("paired") + "Paired · h([SEP])", "53.8%", "<b>.582</b>", ".791", ".170"], tip: MOD.paired.tip + "<br><br>" + RO.sep },
+          { cells: [dot("conditional") + "Conditional · h([SEP])", "<b>62.3%</b>", ".572", "<b>.816</b>", ".185"], tip: MOD.conditional.tip + "<br><br>" + RO.sep },
+          { cells: [dot("jepa") + "JEPA · h([CLS])", "60.6%", ".561", ".803", "<b>.232</b>"], tip: MOD.jepa.tip + "<br><br>" + RO.cls }
+        ]);
+      simpleTable("tA1",
+        [["Model · readout"],
+        ["Caption→caption R@1", "Text only, no map. Each of the 5,000 Flickr test captions retrieves among the other 4,999; a hit is one of the 4 other captions of the same image (paper, Table 5).", "Caption→caption retrieval on 5,000 Flickr test captions (self excluded). Paper: good-view JEPA .606, ordinary NTP .331."],
+        ["STS-B", "Spearman correlation with human similarity ratings on STS-B test (1,379 pairs), cosine after centring (paper protocol, Appendix C).", "STS-B Spearman, centred cosine. Paper: good-view JEPA .579, ordinary NTP .430."],
+        ["Scene share", "The paper’s nuisance estimator (Table 6), k = 32: the fraction of the whitened top-32 caption variance explained by the image (shared across its 5 captions) rather than by the particular wording.", "Scene-explained fraction ρ at k = 32 (higher = more scene, less wording)."],
+        ["COCO R@1", "Transfer: rotation fitted on 30,014 Flickr pairs, then image→caption retrieval among 5,000 COCO test captions. Nothing is fitted on COCO. Chance 0.02%.", "COCO-5k transfer R@1, Flickr-fitted rotation, Flickr means."]],
+        [
+          { cells: [dot("ordinary") + "Ordinary · mean", "33.1%", ".424", ".611", "3.3%"], tip: MOD.ordinary.tip + "<br><br>" + RO.mean },
+          { cells: [dot("ordinary") + "Ordinary · h([SEP])", "12.6%", ".428", ".432", "1.5%"], tip: MOD.ordinary.tip + "<br><br>" + RO.sep },
+          { cells: [dot("paired") + "Paired · mean", "36.7%", ".447", ".633", "3.4%"], tip: MOD.paired.tip + "<br><br>" + RO.mean + "<br><br>The GPT-run checkpoint at ≈139 epochs gives 36.6% / .445 / .641 / 3.4%." },
+          { cells: [dot("paired") + "Paired · h([SEP])", "53.8%", ".582", ".791", "5.5%"], tip: MOD.paired.tip + "<br><br>" + RO.sep + "<br><br>The GPT-run checkpoint at ≈139 epochs gives 53.6% / .569 / .793 / 5.7%." },
+          { cells: [dot("conditional") + "Conditional · mean", "50.6%", ".550", ".734", "6.7%"], tip: MOD.conditional.tip + "<br><br>" + RO.mean },
+          { cells: [dot("conditional") + "Conditional · h([SEP])", "<b>62.3%</b>", "<b>.572</b>", "<b>.816</b>", "<b>7.9%</b>"], tip: MOD.conditional.tip + "<br><br>" + RO.sep },
+          { cells: [dot("jepa") + "JEPA · h([CLS])", "60.6%", ".561", ".803", "6.8%"], tip: MOD.jepa.tip + "<br><br>" + RO.cls },
+          { cells: [dot("jepa") + "JEPA · mean", "51.3%", ".541", ".704", "5.0%"], tip: MOD.jepa.tip + "<br><br>" + RO.mean }
+        ]);
+
+      const QC = [
+        ["raw_mean", "Caption alone; mean of all token states. <b>The paper’s readout.</b>", ".102", ".108", ".153", "24.1%", "24.5%"],
+        ["raw_last", "Caption alone; state of the last caption token.", ".073", ".077", ".091", "20.2%", "–"],
+        ["alternative", "<code>Caption: {A}\\nAlternative caption of the same scene:</code>, final “:” state, no generation.", ".138", ".155", ".170", "35.4%", "35.3%"],
+        ["continuation", "<code>Caption: {A}\\nContinuation of this caption:</code>, final “:” state, no generation.", ".139", ".150", ".146", "36.6%", "42.9%"],
+        ["echo", "<code>Caption: {A}\\nRepeated caption: {A}</code>; mean over the second copy only, whose tokens can all see the full first copy (echo embeddings [4]).", ".113", ".128", ".155", "36.7%", "–"],
+        ["cls_sep_mean", "Literal text <code>[CLS] {A} [SEP]</code> (ordinary text tokens for Qwen); mean of all tokens.", ".098", ".107", ".108", "24.3%", "–"],
+        ["cls_sep_last", "Literal <code>[CLS] {A} [SEP]</code>; state of the final token.", ".108", ".118", ".121", "23.1%", "–"],
+        ["cls_sep_echo", "Literal <code>[CLS] {A} [SEP] {A} [SEP]</code>; mean over the second {A}.", ".118", ".130", ".126", "32.3%", "–"],
+        ["native_eos_mean", "Caption + Qwen’s native end-of-text token; mean of all tokens.", ".098", ".105", ".149", "23.7%", "–"],
+        ["native_eos_last", "Caption + native end-of-text token; state of that token. It largely forgets the caption at late layers.", ".051", ".072", ".067", "1.6%", "–"],
+        ["generated_alternative", "Greedily generate up to 32 tokens B from the alternative prompt; mean over B’s tokens with the prompt in context.", ".103", ".126", ".133", "33.9%", "–"],
+        ["isolated_alternative", "The same generated B, encoded alone without the prompt or A.", ".104", ".119", ".136", "27.8%", "–"],
+        ["generated_continuation", "Generated continuation B, mean over B with the prompt in context.", ".113", ".119", ".138", "27.5%", "–"],
+        ["isolated_continuation", "The same generated continuation, encoded alone.", ".107", ".110", ".131", "22.2%", "–"],
+        ["cls_sep_generated_mean", "Literal <code>[CLS] {A} [SEP] {B_alt} [SEP]</code>; mean of all tokens.", ".114", ".130", ".131", "33.0%", "–"]
+      ];
+      simpleTable("tA2",
+        [["Condition"],
+        ["0.5B · WIT", "Qwen2.5-0.5B, WIT-1024 mutual 10-NN, best layer pair.", "Qwen2.5-0.5B, WIT-1024 mutual 10-NN (best layer pair). Paper baseline .102."],
+        ["1.5B · WIT", "Qwen2.5-1.5B, WIT-1024 mutual 10-NN, best layer pair. Gemini-run.", "Qwen2.5-1.5B, WIT-1024 mutual 10-NN (best layer pair), Gemini-run. Paper baseline .108."],
+        ["72B · WIT", "Qwen2.5-72B in full BF16, WIT-1024 mutual 10-NN, best layer pair.", "Qwen2.5-72B, WIT-1024 mutual 10-NN (best layer pair). Paper baseline .154; paper’s 109M JEPA .184."],
+        ["0.5B · Flickr R@1", "Qwen2.5-0.5B, final layer, rotation fitted on 30,014 Flickr pairs, image→caption R@1 among 1,000 test captions (paper’s Flickr protocol; paper baseline ≈24%).", "Qwen2.5-0.5B, Flickr R@1 with the 30k-pair rotation, final layer."],
+          ["1.5B · Flickr R@1", "Qwen2.5-1.5B (FP16), same Flickr protocol. Only the three main conditions were run.", "Qwen2.5-1.5B, Flickr R@1 with the 30k-pair rotation, final layer, FP16."]],
+        QC.map(q => ({ cells: [`<code>${q[0]}</code>`, q[2], q[3], q[4], q[5], q[6]], tip: `<b>${q[0]}</b><br>${q[1]}` })));
+
+      const RANKTIP = "Effective rank (participation ratio of the singular values) of the val+test caption embeddings: about 1 means every caption maps to nearly the same direction.";
+      simpleTable("tA3c",
+        [["Pilot arm (25 epochs) · readout"],
+        ["R@1 (1k)", MET.r1k.tip, MET.r1k.tip], ["R@1 (30k)", MET.r30k.tip, MET.r30k.tip], ["Mutual 10-NN", MET.mknn.tip, MET.mknn.tip],
+        ["Eff. rank", RANKTIP, RANKTIP]],
+        [
+          { cells: [dot("paired") + "Paired · mean", "18.1%", "26.5%", ".145", "40"], tip: "Paired NTP (joint loss on a and b), a and b two captions of the same image. GPT-run pilot, 25 epochs.<br><br>" + RO.mean },
+          { cells: [dot("paired") + "Paired · h([SEP])", "18.9%", "27.1%", ".160", "18"], tip: "Paired NTP, 25-epoch pilot.<br><br>" + RO.sep },
+          { cells: [dot("conditional") + "Conditional · mean", "20.2%", "30.0%", ".162", "32"], tip: "Loss only on b; a is another caption of the <b>same</b> image. 25-epoch pilot.<br><br>" + RO.mean },
+          { cells: [dot("conditional") + "Conditional · h([SEP])", "<b>22.9%</b>", "<b>31.1%</b>", ".160", "18"], tip: "Loss only on b; a is another caption of the <b>same</b> image. 25-epoch pilot.<br><br>" + RO.sep },
+          { cells: [dot("ordinary") + "Shuffled · mean", "1.3%", "2.3%", ".027", "1.1"], tip: "Same as conditional, but a comes from a <b>different</b> image in the batch, so it carries no information about b. 25-epoch pilot.<br><br>" + RO.mean },
+          { cells: [dot("ordinary") + "Shuffled · h([SEP])", "1.2%", "3.4%", ".020", "1.5"], tip: "Same as conditional, but a comes from a <b>different</b> image. h([SEP]) is still trained to predict b’s first token, but a tells it nothing, so it learns to ignore a.<br><br>" + RO.sep }
+        ]);
+      simpleTable("tA3",
+        [["JEPA readout"], ["R@1 (1k)", MET.r1k.tip, MET.r1k.tip], ["R@1 (30k)", MET.r30k.tip, MET.r30k.tip], ["Mutual 10-NN", MET.mknn.tip, MET.mknn.tip]],
+        [
+          { cells: ["h([CLS]) <span class='note'>(paper)</span>", "24.9%", "33.4%", ".232"], tip: RO.cls },
+          { cells: ["h([CLS]) → projector", "26.7%", "32.4%", ".233"], tip: RO.proj },
+          { cells: ["mean", "16.7%", "28.5%", ".120"], tip: RO.mean },
+          { cells: ["h([SEP])", "11.1%", "21.7%", ".071"], tip: "Final [SEP] state of the bidirectional JEPA encoder. Nothing trains it specifically." }
+        ]);
+
+      /* ---------- citation hover cards ---------- */
+      const REFS = {
+        1: "<b>Proving and Improving the Platonic Representation Hypothesis with JEPAs</b><br>R. Balestriero, Y. LeCun · arXiv:2610.39302, 2026",
+        2: "<b>The Platonic Representation Hypothesis</b><br>M. Huh, B. Cheung, T. Wang, P. Isola · ICML 2024",
+        3: "<b>Scaling Sentence Embeddings with Large Language Models</b> (PromptEOL)<br>T. Jiang et al. · arXiv:2307.16645, 2023",
+        4: "<b>Repetition Improves Language Model Embeddings</b> (echo embeddings)<br>J. Springer et al. · arXiv:2402.15449, 2024",
+        5: "<b>Words That Make Language Models Perceive</b><br>S. L. Wang, P. Isola, B. Cheung · arXiv:2510.02425, 2025",
+        6: "<b>PromptReps: Prompting Large Language Models to Generate Dense and Sparse Representations for Zero-Shot Document Retrieval</b><br>S. Zhuang, X. Ma, B. Koopman, J. Lin · arXiv:2404.18424, 2024",
+        7: "<b>The Truth Lies Somewhere in the Middle (of the Generated Tokens)</b><br>S. L. Wang, P. Isola, B. Cheung · arXiv:2605.09969, 2026",
+        8: "<b>Words That Make Language Models Perceive</b><br>S. L. Wang, P. Isola, B. Cheung · arXiv:2510.02425, 2025"
+      };
+      document.querySelectorAll("a.cite").forEach(a => {
+        const html = a.dataset.cite.split(",").map(n => `<span style="display:block;margin:2px 0">[${n}] ${REFS[n]}</span>`).join("");
+        bindTip(a, html + '<span class="src">click to jump to the reference list</span>');
+      });
+
+      drawF1(); drawF2(); buildT1(); drawF3();
+    })();
+  </script>
+
+  <script>
+    (function () {
+      var btn = document.getElementById("bibcopy"), code = document.getElementById("bibtex");
+      if (!btn || !code) return;
+      function done(ok) { btn.textContent = ok ? "COPIED" : "PRESS CTRL+C"; setTimeout(function () { btn.textContent = "COPY"; }, 1500); }
+      btn.addEventListener("click", function () {
+        var text = code.textContent;
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(text).then(function () { done(true); }, function () { fallback(text); });
+        } else fallback(text);
+      });
+      function fallback(text) {
+        var r = document.createRange(); r.selectNodeContents(code);
+        var sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+        var ok = false; try { ok = document.execCommand("copy"); } catch (e) {}
+        done(ok);
+      }
+    })();
+  </script>
+</body>
+
+</html>

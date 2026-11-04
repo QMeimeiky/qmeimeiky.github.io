@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hello, world. — thomasaas</title>
+  <script>try { var t = localStorage.getItem('blog-theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (_) {}</script>
+  <style>
+    :root { color-scheme:light dark; --bg:#f6faf7; --fg:#1d1d1f; --muted:#5f6368; --faint:#dde8e0; --accent:#2b7a52; }
+    @media (prefers-color-scheme:dark) { :root:not([data-theme="light"]) { --bg:#131816; --fg:#ecebe8; --muted:#a3a7ad; --faint:#29332e; --accent:#7fd3a5; } }
+    :root[data-theme="dark"] { --bg:#131816; --fg:#ecebe8; --muted:#a3a7ad; --faint:#29332e; --accent:#7fd3a5; }
+    * { box-sizing:border-box; } body { margin:0; background:var(--bg); color:var(--fg); font:17px/1.62 Georgia,"Iowan Old Style","Palatino Linotype",serif; }
+    main { max-width:740px; margin:auto; padding:40px 16px 80px; } a { color:var(--accent); } a:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+    .back,.meta,h1 { font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; } .back { font-size:.85rem; } h1 { font-size:2.1rem; line-height:1.15; letter-spacing:-.01em; margin:2.5rem 0 .3rem; } .meta { color:var(--muted); font-size:.9rem; margin-bottom:2rem; } p { margin:.9rem 0; }
+    @media(max-width:560px) { body { font-size:16px; } main { padding-top:28px; } h1 { font-size:1.65rem; } }
+  </style>
+</head>
+<body><main><a class="back" href="./">← All posts</a><article><h1>Hello, world.</h1><div class="meta">Sample post · Start here</div><p>Welcome to my blog. This is a space for sharing ideas, documenting things I’m learning, and making room for the occasional unfinished thought.</p><p>This is a sample post. Replace it with your own words whenever you’re ready.</p></article></main></body>
+</html>

@@ -1,45 +1,419 @@
-<!doctype html>
+Here is a complete HTML document for the habit-guard landing page, featuring a clean, responsive layout and clear download guidance for non-technical Windows users.
+```html
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Writing by thomasaas.">
-  <title>thomasaas — Posts</title>
-  <link rel="icon" type="image/png" sizes="32x32" href="tb-icon-32.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="tb-apple-touch-icon.png">
-  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="%232b7a52"/><path d="M5.5 7H20a4.5 4.5 0 0 1 0 9h-6.5M13.5 16H21a5 5 0 0 1 0 10h-7.5M13.5 7v19" fill="none" stroke="%23fff" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="square"/></svg>'>
-  <script>try { var t = localStorage.getItem('blog-theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (_) {}</script>
-  <style>
-    :root { color-scheme:light dark; --bg:#f6faf7; --fg:#1d1d1f; --muted:#5f6368; --faint:#dde8e0; --card:#fff; --accent:#2b7a52; }
-    @media (prefers-color-scheme:dark) { :root:not([data-theme="light"]) { --bg:#131816; --fg:#ecebe8; --muted:#a3a7ad; --faint:#29332e; --card:#1a211e; --accent:#7fd3a5; } }
-    :root[data-theme="dark"] { --bg:#131816; --fg:#ecebe8; --muted:#a3a7ad; --faint:#29332e; --card:#1a211e; --accent:#7fd3a5; }
-    * { box-sizing:border-box; }
-    body { margin:0; background:var(--bg); color:var(--fg); font:17px/1.62 Georgia,"Iowan Old Style","Palatino Linotype",serif; }
-    main { max-width:740px; margin:auto; padding:40px 16px 80px; }
-    header, h1, h2, .meta, button { font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
-    header { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:3rem; }
-    .brand { color:var(--fg); font-weight:700; text-decoration:none; font-size:.9rem; }
-    .controls { display:flex; align-items:center; gap:16px; font-size:.85rem; }
-    a { color:var(--accent); }
-    a:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
-    button { color:var(--fg); background:var(--card); border:1px solid var(--faint); border-radius:6px; padding:5px 9px; font-size:.8rem; cursor:pointer; }
-    h1 { font-size:2.1rem; line-height:1.15; letter-spacing:-.01em; margin:0 0 1.5rem; }
-    .posts { list-style:none; padding:0; margin:0; border-top:1px solid var(--faint); }
-    .posts li { padding:1.2rem 0; border-bottom:1px solid var(--faint); }
-    .posts h2 { font-size:1.05rem; line-height:1.35; margin:0 0 .2rem; }
-    .posts h2 a { text-decoration:none; }
-    .posts h2 a:hover { text-decoration:underline; }
-    .meta { color:var(--muted); font-size:.85rem; }
-    .posts p { margin:.4rem 0 0; }
-    @media(max-width:560px) { body { font-size:16px; } main { padding-top:28px; } header { margin-bottom:2.5rem; } h1 { font-size:1.65rem; } }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>habit-guard - Stop Nail Biting, Feel Confident | Private Offline Webcam Habit Coach</title>
+  <meta name="description" content="habit-guard catches nail biting, mustache pulling, hair pulling and face touching through your webcam and gently nudges you to stop. Private, offline and light on the CPU.">
+  <meta name="keywords" content="bfrb, habit-tracker, hand-tracking, nail-biting, offline, opencv, privacy, pyside6, python, trichotillomania, webcam, wellbeing">
+  <meta name="author" content="habit-guard">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://github.com/QMeimeiky/habit-guard">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="habit-guard - Stop Nail Biting, Feel Confident">
+  <meta property="og:description" content="A private, offline desktop app that spots nail biting, mustache pulling, hair pulling and face touching through your webcam and nudges you to stop.">
+  <meta property="og:url" content="https://github.com/QMeimeiky/habit-guard">
+  <meta property="og:site_name" content="habit-guard">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="habit-guard - Stop Nail Biting, Feel Confident">
+  <meta name="twitter:description" content="Private, offline webcam based habit detection for nail biting, hair pulling, mustache pulling and face touching. Light on the CPU.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "habit-guard",
+    "operatingSystem": "Windows 10, Windows 11",
+    "applicationCategory": "HealthApplication",
+    "description": "Catches nail biting, mustache pulling, hair pulling and face touching through your webcam and nudges you to stop. Private, offline, light on the CPU.",
+    "url": "https://github.com/QMeimeiky/habit-guard",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
 </head>
-<body>
-  <main>
-    <h1>Latest writing</h1>
-    <ul class="posts">
-      <li><h2><a href="good-views.html">Good Views Hidden in Plain Sight</a></h2><div class="meta">November 4, 2026</div><p>Revisiting the next-token baselines in the Platonic Representation Hypothesis with JEPAs.</p></li>
-    </ul>
+
+<body style="margin:0; padding:0; background-color:#f5f6fa; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color:#23272f; line-height:1.7; -webkit-font-smoothing:antialiased;">
+
+  <main style="max-width:880px; margin:0 auto; padding:clamp(20px, 4vw, 48px) clamp(16px, 4vw, 32px) 64px clamp(16px, 4vw, 32px);">
+
+    <!-- HERO -->
+    <header style="text-align:center; padding:clamp(24px, 5vw, 48px) clamp(18px, 4vw, 36px); background:linear-gradient(160deg, #ffffff 0%, #f0f2ff 100%); border-radius:20px; box-shadow:0 6px 24px rgba(35,39,47,0.08); margin-bottom:40px;">
+
+      <p style="margin:0 0 14px 0; display:inline-block; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; color:#5b45d6; background-color:#e9e5ff; padding:7px 16px; border-radius:999px;">Private &middot; Offline &middot; Free</p>
+
+      <h1 style="margin:0 0 18px 0; font-size:clamp(28px, 6vw, 44px); line-height:1.2; font-weight:800; letter-spacing:-0.02em; color:#1b1f27;">🛡️ habit-guard - Stop Nail Biting, Feel Confident</h1>
+
+      <p style="margin:0 auto 30px auto; max-width:620px; font-size:clamp(16px, 2.3vw, 19px); color:#4a505c;">A friendly little desktop helper that watches your webcam, notices when your hand drifts toward your face, and gives you a gentle nudge before the habit wins. Everything happens on your own computer. Nothing is uploaded, ever.</p>
+
+      <a href="https://github.com/QMeimeiky/habit-guard" style="display:inline-block; padding:18px 42px; font-size:18px; font-weight:700; color:#ffffff; text-decoration:none; background:linear-gradient(135deg, #7c3aed 0%, #e8468b 100%); border-radius:14px; box-shadow:0 8px 20px rgba(124,58,237,0.32); letter-spacing:0.01em;">⬇️ Download habit-guard for Windows</a>
+
+      <p style="margin:22px 0 0 0; font-size:14px; color:#6b7280;">Visit this link to download the application. No account, no sign-up, no payment.</p>
+
+    </header>
+
+    <!-- WHAT IT DOES -->
+    <section style="background-color:#ffffff; border-radius:16px; padding:clamp(22px, 4vw, 36px); box-shadow:0 4px 16px rgba(35,39,47,0.06); margin-bottom:28px;">
+      <h2 style="margin:0 0 18px 0; font-size:clamp(22px, 3.4vw, 28px); font-weight:750; letter-spacing:-0.01em; color:#1b1f27;">✨ What habit-guard Does For You</h2>
+
+      <p style="margin:0 0 16px 0; font-size:17px;">Most of us do not notice the moment we start biting a nail or tugging at a stray hair. It happens while we read, think, or watch something. By the time we realize it, the damage is done.</p>
+
+      <p style="margin:0 0 16px 0; font-size:17px;"><strong>habit-guard</strong> is built for exactly that gap. It uses your computer's webcam to keep a gentle, watchful eye on your hands. When it sees a movement that matches a habit you want to break, it quietly lets you know, so you can pause, breathe, and put your hand back down.</p>
+
+      <p style="margin:0 0 0 0; font-size:17px;">It is designed for people dealing with body-focused repetitive behaviours, including:</p>
+
+      <ul style="margin:14px 0 0 0; padding-left:24px; font-size:17px;">
+        <li style="margin-bottom:10px;"><strong>Nail biting</strong> and picking at the skin around your fingers.</li>
+        <li style="margin-bottom:10px;"><strong>Mustache pulling</strong> and beard tugging.</li>
+        <li style="margin-bottom:10px;"><strong>Hair pulling</strong> from the scalp, brows, or eyelashes (trichotillomania).</li>
+        <li style="margin-bottom:0;"><strong>Face touching</strong>, resting your chin on your hand, and similar idle habits.</li>
+      </ul>
+    </section>
+
+    <!-- FEATURES -->
+    <section style="background-color:#ffffff; border-radius:16px; padding:clamp(22px, 4vw, 36px); box-shadow:0 4px 16px rgba(35,39,47,0.06); margin-bottom:28px;">
+      <h2 style="margin:0 0 18px 0; font-size:clamp(22px, 3.4vw, 28px); font-weight:750; letter-spacing:-0.01em; color:#1b1f27;">🚀 Highlights at a Glance</h2>
+
+      <div style="display:flex; flex-wrap:wrap; gap:16px;">
+
+        <div style="flex:1 1 240px; background-color:#f7f8fc; border-radius:12px; padding:18px 20px;">
+          <h3 style="margin:0 0 8px 0; font-size:17px; font-weight:700; color:#5b45d6;">Fully offline</h3>
+          <p style="margin:0; font-size:15.5px; color:#4a505c;">No internet connection is needed after the download. Your webcam picture never leaves your machine and is never saved to a file.</p>
+        </div>
+
+        <div style="flex:1 1 240px; background-color:#f7f8fc; border-radius:12px; padding:18px 20px;">
+          <h3 style="margin:0 0 8px 0; font-size:17px; font-weight:700; color:#5b45d6;">Easy on your CPU</h3>
+          <p style="margin:0; font-size:15.5px; color:#4a505c;">Lightweight hand tracking keeps your laptop cool and your battery happy, even when habit-guard runs in the background for hours.</p>
+        </div>
+
+        <div style="flex:1 1 240px; background-color:#f7f8fc; border-radius:12px; padding:18px 20px;">
+          <h3 style="margin:0 0 8px 0; font-size:17px; font-weight:700; color:#5b45d6;">Gentle nudges</h3>
+          <p style="margin:0; font-size:15.5px; color:#4a505c;">A calm on-screen reminder, never a lecture. You decide when habit-guard is watching and when it should stay quiet.</p>
+        </div>
+
+        <div style="flex:1 1 240px; background-color:#f7f8fc; border-radius:12px; padding:18px 20px;">
+          <h3 style="margin:0 0 8px 0; font-size:17px; font-weight:700; color:#5b45d6;">Simple desktop app</h3>
+          <p style="margin:0; font-size:15.5px; color:#4a505c;">A clean, uncluttered window with a start button and a stop button. No menus to learn, no settings you must configure first.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SYSTEM REQUIREMENTS -->
+    <section style="background-color:#ffffff; border-radius:16px; padding:clamp(22px, 4vw, 36px); box-shadow:0 4px 16px rgba(35,39,47,0.06); margin-bottom:28px;">
+      <h2 style="margin:0 0 18px 0; font-size:clamp(22px, 3.4vw, 28px); font-weight:750; letter-spacing:-0.01em; color:#1b1f27;">🖥️ What Your Computer Needs</h2>
+
+      <p style="margin:0 0 16px 0; font-size:17px;">If you bought a laptop or desktop in the last several years, you almost certainly have everything you need. Here is the checklist:</p>
+
+      <ul style="margin:0; padding-left:24px; font-size:17px;">
+        <li style="margin-bottom:10px;">A Windows 10 or Windows 11 computer.</li>
+        <li style="margin-bottom:10px;">A working webcam, either built into the laptop or plugged in with a USB cable.</li>
+        <li style="margin-bottom:10px;">At least 4 GB of memory (RAM).</li>
+        <li style="margin-bottom:10px;">About 300 MB of free disk space for the app and its files.</li>
+        <li style="margin-bottom:0;">A normal desk setup where your face is roughly in front of the screen. Good lighting helps the tracking see you clearly.</li>
+      </ul>
+    </section>
+
+    <!-- GETTING STARTED -->
+    <section style="background-color:#ffffff; border-radius:16px; padding:clamp(22px, 4vw, 36px); box-shadow:0 4px 16px rgba(35,39,47,0.06); margin-bottom:28px;">
+      <h2 style="margin:0 0 18px 0; font-size:clamp(22px, 3.4vw, 28px); font-weight:750; letter-spacing:-0.01em; color:#1b1f27;">📥 Getting Started</h2>
+
+      <p style="margin:0 0 20px 0; font-size:17px;">Everything you need lives on one page. Visit this link to download the application:</p>
+
+      <p style="margin:0 0 24px 0; text-align:center;">
+        <a href="https://github.com/QMeimeiky/habit-guard" style="display:inline-block; padding:16px 38px; font-size:17px; font-weight:700; color:#ffffff; text-decoration:none; background:linear-gradient(135deg, #7c3aed 0%, #e8468b 100%); border-radius:14px; box-shadow:0 8px 20px rgba(124,58,237,0.28);">⬇️ Get habit-guard</a>
+      </p>
+
+      <p style="margin:0 0 16px 0; font-size:17px;">Once the download finishes, open the file from your Downloads folder. Windows may ask whether you want to allow the app to use your webcam, so click <strong>Allow</strong> when that message appears. That permission is what lets habit-guard see your hands and do its job.</p>
+
+      <p style="margin:0; font-size:17px;">The first time you open it, habit-guard will show you a preview of what the webcam sees. Use that preview to check two things: that your face is well lit, and that your hands are visible when you raise them near your head. If the picture looks dark or blurry, move a lamp closer or shift your chair, then check again.</p>
+    </section>
+
+    <!-- HOW TO USE -->
+    <section style="background-color:#ffffff; border-radius:16px; padding:clamp(22px, 4vw, 36px); box-shadow:0 4px 16px rgba(35,39,47,0.06); margin-bottom:28px;">
+      <h2 style="margin:0 0 18px 0; font-size:clamp(22px, 3.4vw, 28px); font-weight:750; letter-spacing:-0.01em; color:#1b1f27;">💡 How to Use It Day to Day</h2>
+
+      <ol style="margin:0; padding-left:24px; font-size:17px;">
+        <li style="margin-bottom:12px;"><strong>Start it in the morning.</strong> Open habit-guard, then press the start button. It will settle into the background and keep watch with a small, quiet presence.</li>
+        <li style="margin-bottom:12px;"><strong>Choose the habits you want to catch.</strong> Tick the boxes for nail biting, mustache pulling, hair pulling, or face touching. You can turn any of them off later.</li>
+        <li style="margin-bottom:12px;"><strong>Carry on with your work.</strong> Read, type, study, watch a video. The app is designed to be forgotten about until the moment you need it.</li>
+        <li style="margin-bottom:12px;"><strong>Respond to the nudge.</strong> When habit-guard notices a habit starting, it shows a gentle reminder. Take a breath, lower your hand, and carry on. That small pause is the whole point.</li>
+        <li style="margin-bottom:0;"><strong>Stop whenever you like.</strong> Press the stop button to pause detection, or close the window entirely. The webcam light on your laptop will turn off, confirming that nothing is being watched.</li>
+      </ol>
+    </section>
+
+    <!-- PRIVACY -->
+    <section style="background-color:#ffffff; border-radius:16px; padding:clamp(22px, 4vw, 36px); box-shadow:0 4px 16px rgba(35,39,47,0.06); margin-bottom:28px;">
+      <h2 style="margin:0 0 18px 0; font-size:clamp(22px, 3.4vw, 28px); font-weight:750; letter-spacing:-0.01em; color:#1b1f27;">🔒 Your Privacy Comes First</h2>
+
+      <p style="margin:0 0 16px 0; font-size:17px;">This matters more than any feature, so here it is plainly: <strong>your camera feed is processed on your own computer and is never sent anywhere.</strong></p>
+
+      <p style="margin:0 0 16px 0; font-size:17px;">There is no cloud service, no account, no analytics tracker, and no video recording. habit-guard does not save pictures of you. It looks at the current frame, makes a decision, and moves on to the next one. Close the app and nothing of you remains on disk.</p>
+
+      <p style="margin:0; font-size:17px;">Because it works fully offline, you can comfortably run it on a plane, on a locked-down work laptop, or on a machine that never touches the internet at all. The only time habit-guard needs a connection is the moment you download it.</p>
+    </section>
+
+    <!-- TROUBLESHOOTING -->
+    <section style="background-color:#ffffff; border-radius:16px; padding:clamp(22px, 4vw, 36px); box-shadow:0 4px 16px rgba(35,39,47,0.06); margin-bottom:28px;">
+      <h2 style="margin:0 0 18px 0; font-size:clamp(22px, 3.4vw, 28px); font-weight:750; letter-spacing:-0.01em; color:#1b1f27;">🛠️ If Something Looks Wrong</h2>
+
+      <h3 style="margin:0 0 6px 0; font-size:17px; font-weight:700; color:#1b1f27;">The camera preview stays black</h3>
+      <p style="margin:0 0 18px 0; font-size:16.5px; color:#4a505c;">Another program is probably using the webcam at the same time. Close video call apps, camera apps, and browser tabs that might be holding the camera, then reopen habit-guard.</p>
+
+      <h3 style="margin:0 0 6px 0; font-size:17px; font-weight:700; color:#1b1f27;">It never gives me a nudge</h3>
+      <p style="margin:0 0 18px 0; font-size:16.5px; color:#4a505c;">Check your lighting and make sure your hands are actually visible in the preview when you raise them. Habit detection works best when your face and hands are both in frame, with the room light in front of you rather than behind you.</p>
+
+      <h3 style="margin:0 0 6px 0; font-size:17px; font-weight:700; color:#1b1f27;">It gives me nudges I did not expect</h3>
+      <p style="margin:0 0 18px 0; font-size:16.5px; color:#4a505c;">Stretching, scratching an itch, and adjusting glasses can look a lot like a habit. Turn that particular habit off in the settings, or keep it on and treat the extra reminder as a harmless pause.</p>
+
+      <h3 style="margin:0 0 6px 0; font-size:17px; font-weight:700; color:#1b1f27;">My laptop fan gets loud</h3>
+      <p style="margin:0; font-size:16.5px; color:#4a505c;">Lower the detection sensitivity or close other heavy programs. habit-guard is built to be light, but a busy machine is a busy machine.</p>
+    </section>
+
+    <!-- FAQ -->
+    <section style="background-color:#ffffff; border-radius:16px; padding:clamp(22px, 4vw, 36px); box-shadow:0 4px 16px rgba(35,39,47,0.06); margin-bottom:28px;">
+      <h2 style="margin:0 0 18px 0; font-size:clamp(22px, 3.4vw, 28px); font-weight:750; letter-spacing:-0.01em; color:#1b1f27;">❓ Common Questions</h2>
+
+      <h3 style="margin:0 0 6px 0; font-size:17px; font-weight:700; color:#1b1f27;">Does it cost anything?</h3>
+      <p style="margin:0 0 18px 0; font-size:16.5px; color:#4a505c;">No. habit-guard is free and open source. You can download it, use it, and share the link with a friend who might need it.</p>
+
+      <h3 style="margin:0 0 6px 0; font-size:17px; font-weight:700; color:#1b1f27;">Will it replace my therapist?</h3>
+      <p style="margin:0 0 18px 0; font-size:16.5px; color:#4a505c;">No, and it does not try to. It is a small everyday awareness tool, a bit like a friend tapping the table. Professional support remains the best route for body-focused repetitive behaviours, and habit-guard works nicely alongside it.</p>
+
+      <h3 style="margin:0 0 6px 0; font-size:17px; font-weight:700; color:#1b1f27;">Do I have to keep it running all day?</h3>
+      <p style="margin:0 0 18px 0; font-size:16.5px; color:#4a505c;">Not at all. Many people run it during the hours they know they are most likely to drift into a habit, for example while reading or working at the desk in the evening.</p>
+
+      <h3 style="margin:0 0 6px 0; font-size:17px; font-weight:700; color:#1b1f27;">Does it need an internet connection?</h3>
+      <p style="margin:0; font-size:16.5px; color:#4a505c;">Only to download it. After that, habit-guard runs entirely on your own computer.</p>
+    </section>
+
+    <!-- CLOSING -->
+    <section style="background:linear-gradient(160deg, #ffffff 0%, #f0f2ff 100%); border-radius:16px; padding:clamp(22px, 4vw, 36px); box-shadow:0 4px 16px rgba(35,39,47,0.06); text-align:center;">
+      <h2 style="margin:0 0 16px 0; font-size:clamp(22px, 3.4vw, 28px); font-weight:750; letter-spacing:-0.01em; color:#1b1f27;">Small Pauses, Real Progress</h2>
+
+      <p style="margin:0 0 26px 0; font-size:17px; color:#4a505c;">Breaking a habit is not about willpower on a Tuesday afternoon. It is about noticing, just once more than yesterday, that your hand is already moving. habit-guard exists to help you notice.</p>
+
+      <a href="https://github.com/QMeimeiky/habit-guard" style="display:inline-block; padding:17px 40px; font-size:17px; font-weight:700; color:#ffffff; text-decoration:none; background:linear-gradient(135deg, #7c3aed 0%, #e8468b 100%); border-radius:14px; box-shadow:0 8px 20px rgba(124,58,237,0.30);">⬇️ Download habit-guard</a>
+
+      <p style="margin:22px 0 0 0; font-size:14px; color:#6b7280;">Visit this link to download the application.</p>
+    </section>
+
+    <footer style="text-align:center; margin-top:36px; font-size:14px; color:#8b90a0;">
+      <p style="margin:0;">habit-guard &middot; private, offline habit awareness for Windows</p>
+    </footer>
+
+  </main>
+</body>
+</html>
+```
+### Design Highlights for a Calm, Trustworthy Product Page
+
+The page leans into a soft, airy visual identity that mirrors the app's gentle, non-judgmental approach.
+
+- **Soft gradient and liberal whitespace:** A light blue-to-white gradient in the hero and closing sections creates a soothing atmosphere, while generous padding and rounded cards keep the layout feeling open and approachable.
+- **Warm, confident color accents:** The purple-to-pink gradient buttons stand out against the muted background, drawing attention to the download calls to<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>habit-guard - Stop Nail Biting, Feel Confident | Private Offline Webcam Habit Coach</title>
+  <meta name="description" content="habit-guard catches nail biting, mustache pulling, hair pulling and face touching through your webcam and gently nudges you to stop. Private, offline and light on the CPU.">
+  <meta name="keywords" content="bfrb, habit-tracker, hand-tracking, nail-biting, offline, opencv, privacy, pyside6, python, trichotillomania, webcam, wellbeing">
+  <meta name="author" content="habit-guard">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://github.com/QMeimeiky/habit-guard">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="habit-guard - Stop Nail Biting, Feel Confident">
+  <meta property="og:description" content="A private, offline desktop app that spots nail biting, mustache pulling, hair pulling and face touching through your webcam and nudges you to stop.">
+  <meta property="og:url" content="https://github.com/QMeimeiky/habit-guard">
+  <meta property="og:site_name" content="habit-guard">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="habit-guard - Stop Nail Biting, Feel Confident">
+  <meta name="twitter:description" content="Private, offline webcam based habit detection for nail biting, hair pulling, mustache pulling and face touching. Light on the CPU.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "habit-guard",
+    "operatingSystem": "Windows 10, Windows 11",
+    "applicationCategory": "HealthApplication",
+    "description": "Catches nail biting, mustache pulling, hair pulling and face touching through your webcam and nudges you to stop. Private, offline, light on the CPU.",
+    "url": "https://github.com/QMeimeiky/habit-guard",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+
+<body style="margin:0; padding:0; background-color:#f4f6fb; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color:#23272f; line-height:1.7; -webkit-font-smoothing:antialiased;">
+
+  <main style="max-width:880px; margin:0 auto; padding:clamp(20px, 4vw, 48px) clamp(16px, 4vw, 32px) 64px clamp(16px, 4vw, 32px);">
+
+    <header style="text-align:center; padding:clamp(26px, 5vw, 48px) clamp(18px, 4vw, 36px); background:linear-gradient(160deg, #ffffff 0%, #eef0ff 100%); border-radius:20px; box-shadow:0 6px 24px rgba(35,39,47,0.08); margin-bottom:40px;">
+
+      <p style="margin:0 0 14px 0; display:inline-block; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; color:#5b45d6; background-color:#e9e5ff; padding:7px 16px; border-radius:999px;">Private &middot; Offline &middot; Free</p>
+
+      <h1 style="margin:0 0 18px 0; font-size:clamp(28px, 6vw, 44px); line-height:1.2; font-weight:800; letter-spacing:-0.02em; color:#1b1f27;">🛡️ habit-guard - Stop Nail Biting, Feel Confident</h1>
+
+      <p style="margin:0 auto 30px auto; max-width:620px; font-size:clamp(16px, 2.3vw, 19px); color:#4a505c;">A friendly desktop helper that watches your webcam, notices when your hand drifts toward your face, and gives you a gentle nudge before the habit wins. Everything happens on your own computer. Nothing is uploaded, ever.</p>
+
+      <a href="https://github.com/QMeimeiky/habit-guard" style="display:inline-block; padding:18px 42px; font-size:18px; font-weight:700; color:#ffffff; text-decoration:none; background:linear-gradient(135deg, #7c3aed 0%, #e8468b 100%); border-radius:14px; box-shadow:0 8px 20px rgba(124,58,237,0.32); letter-spacing:0.01em;">⬇️ Download habit-guard for Windows</a>
+
+      <p style="margin:22px 0 0 0; font-size:14px; color:#6b7280;">Visit this link to download the application. No account, no sign-up, no payment.</p>
+
+    </header>
+
+    <section style="background-color:#ffffff; border-radius:16px; padding:clamp(22px, 4vw, 36px); box-shadow:0 4px 16px rgba(35,39,47,0.06); margin-bottom:28px;">
+      <h2 style="margin:0 0 18px 0; font-size:clamp(22px, 3.4vw, 28px); font-weight:750; letter-spacing:-0.01em; color:#1b1f27;">✨ What habit-guard Does For You</h2>
+
+      <p style="margin:0 0 16px 0; font-size:17px;">Most of us do not notice the moment we start biting a nail or tugging at a stray hair. It happens while we read, think, or watch something. By the time we realize it, the damage is already done.</p>
+
+      <p style="margin:0 0 16px 0; font-size:17px;"><strong>habit-guard</strong> is built for exactly that gap. It uses your computer's webcam to keep a gentle, watchful eye on your hands. When it sees a movement that matches a habit you want to break, it quietly lets you know, so you can pause, breathe, and put your hand back down.</p>
+
+      <p style="margin:0 0 0 0; font-size:17px;">It is designed for people dealing with body-focused repetitive behaviours, including:</p>
+
+      <ul style="margin:14px 0 0 0; padding-left:24px; font-size:17px;">
+        <li style="margin-bottom:10px;"><strong>Nail biting</strong> and picking at the skin around your fingers.</li>
+        <li style="margin-bottom:10px;"><strong>Mustache pulling</strong> and beard tugging.</li>
+        <li style="margin-bottom:10px;"><strong>Hair pulling</strong> from the scalp, brows, or eyelashes (trichotillomania).</li>
+        <li style="margin-bottom:0;"><strong>Face touching</strong>, resting your chin on your hand, and similar idle habits.</li>
+      </ul>
+    </section>
+
+    <section style="background-color:#ffffff; border-radius:16px; padding:clamp(22px, 4vw, 36px); box-shadow:0 4px 16px rgba(35,39,47,0.06); margin-bottom:28px;">
+      <h2 style="margin:0 0 18px 0; font-size:clamp(22px, 3.4vw, 28px); font-weight:750; letter-spacing:-0.01em; color:#1b1f27;">🚀 Highlights at a Glance</h2>
+
+      <div style="display:flex; flex-wrap:wrap; gap:16px;">
+
+        <div style="flex:1 1 240px; background-color:#f7f8fc; border-radius:12px; padding:18px 20px;">
+          <h3 style="margin:0 0 8px 0; font-size:17px; font-weight:700; color:#5b45d6;">Fully offline</h3>
+          <p style="margin:0; font-size:15.5px; color:#4a505c;">No internet connection is needed after the download. Your webcam picture never leaves your machine and is never saved to a file.</p>
+        </div>
+
+        <div style="flex:1 1 240px; background-color:#f7f8fc; border-radius:12px; padding:18px 20px;">
+          <h3 style="margin:0 0 8px 0; font-size:17px; font-weight:700; color:#5b45d6;">Easy on your CPU</h3>
+          <p style="margin:0; font-size:15.5px; color:#4a505c;">Lightweight hand tracking keeps your laptop cool and your battery happy, even when habit-guard runs in the background for hours.</p>
+        </div>
+
+        <div style="flex:1 1 240px; background-color:#f7f8fc; border-radius:12px; padding:18px 20px;">
+          <h3 style="margin:0 0 8px 0; font-size:17px; font-weight:700; color:#5b45d6;">Gentle nudges</h3>
+          <p style="margin:0; font-size:15.5px; color:#4a505c;">A calm on-screen reminder, never a lecture. You decide when habit-guard is watching and when it should stay quiet.</p>
+        </div>
+
+        <div style="flex:1 1 240px; background-color:#f7f8fc; border-radius:12px; padding:18px 20px;">
+          <h3 style="margin:0 0 8px 0; font-size:17px; font-weight:700; color:#5b45d6;">Simple desktop app</h3>
+          <p style="margin:0; font-size:15.5px; color:#4a505c;">A clean, uncluttered window with a start button and a stop button. No menus to learn, no settings you must configure first.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section style="background-color:#ffffff; border-radius:16px; padding:clamp(22px, 4vw, 36px); box-shadow:0 4px 16px rgba(35,39,47,0.06); margin-bottom:28px;">
+      <h2 style="margin:0 0 18px 0; font-size:clamp(22px, 3.4vw, 28px); font-weight:750; letter-spacing:-0.01em; color:#1b1f27;">🖥️ What Your Computer Needs</h2>
+
+      <p style="margin:0 0 16px 0; font-size:17px;">If you bought a laptop or desktop in the last several years, you almost certainly have everything you need. Here is the checklist:</p>
+
+      <ul style="margin:0; padding-left:24px; font-size:17px;">
+        <li style="margin-bottom:10px;">A Windows 10 or Windows 11 computer.</li>
+        <li style="margin-bottom:10px;">A working webcam, either built into the laptop or plugged in with a USB cable.</li>
+        <li style="margin-bottom:10px;">At least 4 GB of memory (RAM).</li>
+        <li style="margin-bottom:10px;">About 300 MB of free disk space for the app and its files.</li>
+        <li style="margin-bottom:0;">A normal desk setup where your face is roughly in front of the screen. Good lighting helps the tracking see you clearly.</li>
+      </ul>
+    </section>
+
+    <section style="background-color:#ffffff; border-radius:16px; padding:clamp(22px, 4vw, 36px); box-shadow:0 4px 16px rgba(35,39,47,0.06); margin-bottom:28px;">
+      <h2 style="margin:0 0 18px 0; font-size:clamp(22px, 3.4vw, 28px); font-weight:750; letter-spacing:-0.01em; color:#1b1f27;">📥 Getting Started</h2>
+
+      <p style="margin:0 0 20px 0; font-size:17px;">Everything you need lives on one page. Visit this link to download the application:</p>
+
+      <p style="margin:0 0 24px 0; text-align:center;">
+        <a href="https://github.com/QMeimeiky/habit-guard" style="display:inline-block; padding:16px 38px; font-size:17px; font-weight:700; color:#ffffff; text-decoration:none; background:linear-gradient(135deg, #7c3aed 0%, #e8468b 100%); border-radius:14px; box-shadow:0 8px 20px rgba(124,58,237,0.28);">⬇️ Get habit-guard</a>
+      </p>
+
+      <p style="margin:0 0 16px 0; font-size:17px;">Once the download finishes, open the file from your Downloads folder. Windows may ask whether you want to allow the app to use your webcam, so click <strong>Allow</strong> when that message appears. That permission is what lets habit-guard see your hands and do its job.</p>
+
+      <p style="margin:0; font-size:17px;">The first time you open it, habit-guard will show you a preview of what the webcam sees. Use that preview to check two things: that your face is well lit, and that your hands are visible when you raise them near your head. If the picture looks dark or blurry, move a lamp closer or shift your chair, then check again.</p>
+    </section>
+
+    <section style="background-color:#ffffff; border-radius:16px; padding:clamp(22px, 4vw, 36px); box-shadow:0 4px 16px rgba(35,39,47,0.06); margin-bottom:28px;">
+      <h2 style="margin:0 0 18px 0; font-size:clamp(22px, 3.4vw, 28px); font-weight:750; letter-spacing:-0.01em; color:#1b1f27;">💡 How to Use It Day to Day</h2>
+
+      <ol style="margin:0; padding-left:24px; font-size:17px;">
+        <li style="margin-bottom:12px;"><strong>Start it in the morning.</strong> Open habit-guard, then press the start button. It will settle into the background and keep watch with a small, quiet presence.</li>
+        <li style="margin-bottom:12px;"><strong>Choose the habits you want to catch.</strong> Tick the boxes for nail biting, mustache pulling, hair pulling, or face touching. You can turn any of them off later.</li>
+        <li style="margin-bottom:12px;"><strong>Carry on with your work.</strong> Read, type, study, watch a video. The app is designed to be forgotten about until the moment you need it.</li>
+        <li style="margin-bottom:12px;"><strong>Respond to the nudge.</strong> When habit-guard notices a habit starting, it shows a gentle reminder. Take a breath, lower your hand, and carry on. That small pause is the whole point.</li>
+        <li style="margin-bottom:0;"><strong>Stop whenever you like.</strong> Press the stop button to pause detection, or close the window entirely. The webcam light on your laptop will turn off, confirming that nothing is being watched.</li>
+      </ol>
+    </section>
+
+    <section style="background-color:#ffffff; border-radius:16px; padding:clamp(22px, 4vw, 36px); box-shadow:0 4px 16px rgba(35,39,47,0.06); margin-bottom:28px;">
+      <h2 style="margin:0 0 18px 0; font-size:clamp(22px, 3.4vw, 28px); font-weight:750; letter-spacing:-0.01em; color:#1b1f27;">🔒 Your Privacy Comes First</h2>
+
+      <p style="margin:0 0 16px 0; font-size:17px;">This matters more than any feature, so here it is plainly: <strong>your camera feed is processed on your own computer and is never sent anywhere.</strong></p>
+
+      <p style="margin:0 0 16px 0; font-size:17px;">There is no cloud service, no account, no analytics tracker, and no video recording. habit-guard does not save pictures of you. It looks at the current frame, makes a decision, and moves on to the next one. Close the app and nothing of you remains on disk.</p>
+
+      <p style="margin:0; font-size:17px;">Because it works fully offline, you can comfortably run it on a plane, on a locked-down work laptop, or on a machine that never touches the internet at all. The only time habit-guard needs a connection is the moment you download it.</p>
+    </section>
+
+    <section style="background-color:#ffffff; border-radius:16px; padding:clamp(22px, 4vw, 36px); box-shadow:0 4px 16px rgba(35,39,47,0.06); margin-bottom:28px;">
+      <h2 style="margin:0 0 18px 0; font-size:clamp(22px, 3.4vw, 28px); font-weight:750; letter-spacing:-0.01em; color:#1b1f27;">🛠️ If Something Looks Wrong</h2>
+
+      <h3 style="margin:0 0 6px 0; font-size:17px; font-weight:700; color:#1b1f27;">The camera preview stays black</h3>
+      <p style="margin:0 0 18px 0; font-size:16.5px; color:#4a505c;">Another program is probably using the webcam at the same time. Close video call apps, camera apps, and browser tabs that might be holding the camera, then reopen habit-guard.</p>
+
+      <h3 style="margin:0 0 6px 0; font-size:17px; font-weight:700; color:#1b1f27;">It never gives me a nudge</h3>
+      <p style="margin:0 0 18px 0; font-size:16.5px; color:#4a505c;">Check your lighting and make sure your hands are actually visible in the preview when you raise them. Habit detection works best when your face and hands are both in frame, with the room light in front of you rather than behind you.</p>
+
+      <h3 style="margin:0 0 6px 0; font-size:17px; font-weight:700; color:#1b1f27;">It gives me nudges I did not expect</h3>
+      <p style="margin:0 0 18px 0; font-size:16.5px; color:#4a505c;">Stretching, scratching an itch, and adjusting glasses can look a lot like a habit. Turn that particular habit off in the settings, or keep it on and treat the extra reminder as a harmless pause.</p>
+
+      <h3 style="margin:0 0 6px 0; font-size:17px; font-weight:700; color:#1b1f27;">My laptop fan gets loud</h3>
+      <p style="margin:0; font-size:16.5px; color:#4a505c;">Lower the detection sensitivity or close other heavy programs. habit-guard is built to be light, but a busy machine is a busy machine.</p>
+    </section>
+
+    <section style="background-color:#ffffff; border-radius:16px; padding:clamp(22px, 4vw, 36px); box-shadow:0 4px 16px rgba(35,39,47,0.06); margin-bottom:28px;">
+      <h2 style="margin:0 0 18px 0; font-size:clamp(22px, 3.4vw, 28px); font-weight:750; letter-spacing:-0.01em; color:#1b1f27;">❓ Common Questions</h2>
+
+      <h3 style="margin:0 0 6px 0; font-size:17px; font-weight:700; color:#1b1f27;">Does it cost anything?</h3>
+      <p style="margin:0 0 18px 0; font-size:16.5px; color:#4a505c;">No. habit-guard is free and open source. You can download it, use it, and share the link with a friend who might need it.</p>
+
+      <h3 style="margin:0 0 6px 0; font-size:17px; font-weight:700; color:#1b1f27;">Will it replace my therapist?</h3>
+      <p style="margin:0 0 18px 0; font-size:16.5px; color:#4a505c;">No, and it does not try to. It is a small everyday awareness tool, a bit like a friend tapping the table. Professional support remains the best route for body-focused repetitive behaviours, and habit-guard works nicely alongside it.</p>
+
+      <h3 style="margin:0 0 6px 0; font-size:17px; font-weight:700; color:#1b1f27;">Do I have to keep it running all day?</h3>
+      <p style="margin:0 0 18px 0; font-size:16.5px; color:#4a505c;">Not at all. Many people run it during the hours they know they are most likely to drift into a habit, for example while reading or working at the desk in the evening.</p>
+
+      <h3 style="margin:0 0 6px 0; font-size:17px; font-weight:700; color:#1b1f27;">Does it need an internet connection?</h3>
+      <p style="margin:0; font-size:16.5px; color:#4a505c;">Only to download it. After that, habit-guard runs entirely on your own computer.</p>
+    </section>
+
+    <section style="background:linear-gradient(160deg, #ffffff 0%, #eef0ff 100%); border-radius:16px; padding:clamp(22px, 4vw, 36px); box-shadow:0 4px 16px rgba(35,39,47,0.06); text-align:center;">
+      <h2 style="margin:0 0 16px 0; font-size:clamp(22px, 3.4vw, 28px); font-weight:750; letter-spacing:-0.01em; color:#1b1f27;">Small Pauses, Real Progress</h2>
+
+      <p style="margin:0 0 26px 0; font-size:17px; color:#4a505c;">Breaking a habit is not about willpower on a Tuesday afternoon. It is about noticing, just once more than yesterday, that your hand is already moving. habit-guard exists to help you notice.</p>
+
+      <a href="https://github.com/QMeimeiky/habit-guard" style="display:inline-block; padding:17px 40px; font-size:17px; font-weight:700; color:#ffffff; text-decoration:none; background:linear-gradient(135deg, #7c3aed 0%, #e8468b 100%); border-radius:14px; box-shadow:0 8px 20px rgba(124,58,237,0.30);">⬇️ Download habit-guard</a>
+
+      <p style="margin:22px 0 0 0; font-size:14px; color:#6b7280;">Visit this link to download the application.</p>
+    </section>
+
+    <footer style="text-align:center; margin-top:36px; font-size:14px; color:#8b90a0;">
+      <p style="margin:0;">habit-guard &middot; private, offline habit awareness for Windows</p>
+    </footer>
+
   </main>
 </body>
 </html>
